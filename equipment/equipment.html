@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Технологическое оборудование — МЕДБИОПАК</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=PT+Serif:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink:       #14161c;
+    --ink-soft:  #3d434e;
+    --muted:     rgba(20, 22, 28, 0.55);
+    --muted-2:   rgba(20, 22, 28, 0.42);
+    --line:      rgba(20, 22, 28, 0.10);
+    --line-soft: rgba(20, 22, 28, 0.06);
+    --red:       #E11D2A;
+    --red-soft:  rgba(225, 29, 42, 0.08);
+    --red-hov:   #c5171f;
+    --bg:        #F0F4F8;
+    --white:     #ffffff;
+
+    --header-h:    66px;
+    --header-top:  16px;
+    --header-side: 20px;
+
+    --side-w:      290px;
+    --side-gap:    18px;
+
+    --brand-w:     97px;
+  }
+
+  html, body {
+    background: var(--bg);
+    background-image: url('../images/bg-print.jpg');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-weight: 400;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+  body { overflow-x: hidden; position: relative; }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; background: none; border: none; cursor: pointer; }
+
+  /* ================= ЛОГОТИП ================= */
+  .brand-fixed {
+    position: fixed;
+    top: 28px;
+    left: calc(var(--side-gap) + (var(--side-w) - var(--brand-w)) / 2);   /* по центру над боковой панелью */
+    z-index: 60;
+    display: block;
+    width: var(--brand-w);
+  }
+  .brand-fixed img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.7));
+  }
+
+  /* ================= HEADER ================= */
+  .topbar {
+    position: fixed;
+    top: var(--header-top);
+    left: 50%;
+    transform: translateX(-50%);
+    right: auto;
+    height: var(--header-h);
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(22px) saturate(140%);
+    -webkit-backdrop-filter: blur(22px) saturate(140%);
+    border-radius: 999px;
+    border: 1px solid rgba(20, 22, 28, 0.12);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.6) inset,
+      0 10px 30px rgba(20, 22, 28, 0.10);
+    display: inline-flex;
+    align-items: center;
+    padding: 0 10px 0 32px;
+    gap: 18px;
+    white-space: nowrap;
+  }
+  .topbar__nav { flex: 0 0 auto; }
+  .topbar__nav ul {
+    list-style: none;
+    display: flex;
+    gap: 26px;
+    justify-content: center;
+  }
+  .topbar__nav a {
+    display: inline-block;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: rgba(20, 22, 28, 0.78);
+    letter-spacing: -0.005em;
+    padding: 6px 2px;
+    position: relative;
+    transition: color .2s;
+  }
+  .topbar__nav a::after {
+    content: "";
+    position: absolute;
+    left: 2px; right: 2px;
+    bottom: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .25s ease;
+  }
+  .topbar__nav a:hover,
+  .topbar__nav a.is-active { color: var(--ink); }
+  .topbar__nav a.is-active::after,
+  .topbar__nav a:hover::after { transform: scaleX(1); }
+
+  .topbar__right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .topbar__search {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink);
+    transition: background .2s, color .2s;
+  }
+  .topbar__search:hover { background: rgba(20, 22, 28, 0.06); }
+  .topbar__search svg { width: 18px; height: 18px; }
+
+  .topbar__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    height: 42px;
+    padding: 0 20px;
+    background: var(--red);
+    color: #fff;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1;
+    letter-spacing: -0.005em;
+    transition: background .2s, transform .2s, box-shadow .2s;
+  }
+  .topbar__cta:hover {
+    background: var(--red-hov);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(225, 29, 42, 0.28);
+  }
+  .topbar__cta svg { width: 15px; height: 15px; }
+
+  /* ================= SIDEBAR ================= */
+  .sidebar {
+    position: fixed;
+    top: 176px;
+    left: var(--side-gap);
+    bottom: var(--side-gap);
+    width: var(--side-w);
+    z-index: 40;
+    background: var(--white);
+    border-radius: 22px;
+    padding: 22px 18px 22px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.6) inset,
+      0 10px 36px rgba(20, 22, 28, 0.08);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(20, 22, 28, 0.15) transparent;
+  }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: rgba(20, 22, 28, 0.12); border-radius: 2px; }
+
+  .sidebar__title {
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink);
+    padding: 4px 10px 22px 22px;
+    border-bottom: 2px solid rgba(20, 22, 28, 0.12);
+    margin-bottom: 14px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .sidebar__title-ico {
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    background: var(--red-soft);
+    color: var(--red);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .sidebar__title-ico svg { width: 15px; height: 15px; }
+  .sidebar__title::after {
+    content: "";
+    position: absolute;
+    left: 22px;
+    bottom: -2px;
+    width: 40px;
+    height: 2px;
+    background: var(--red);
+  }
+
+  .side-nav { display: flex; flex-direction: column; }
+  .side-item { position: relative; }
+  .side-item + .side-item {
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .side-item__head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 12px;
+    border-radius: 10px;
+    color: var(--ink);
+    position: relative;
+    transition: background .2s, color .2s;
+  }
+  .side-item__head:hover { background: rgba(20, 22, 28, 0.025); }
+
+  .side-item__icon {
+    width: 26px;
+    height: 26px;
+    color: var(--ink-soft);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: color .2s;
+  }
+  .side-item__icon svg { width: 22px; height: 22px; }
+
+  .side-item__label {
+    flex: 1;
+    font-size: 14.5px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    line-height: 1.25;
+  }
+
+  .side-item__chev {
+    width: 14px; height: 14px;
+    color: var(--muted-2);
+    flex-shrink: 0;
+    transition: transform .25s, color .2s;
+  }
+  .side-item__chev--down { transform: rotate(0deg); }
+  .side-item__chev--right { transform: rotate(-90deg); }
+
+  .side-item.is-active > .side-item__head::before {
+    content: "";
+    position: absolute;
+    left: -4px;
+    top: 6px;
+    bottom: 6px;
+    width: 3px;
+    background: var(--red);
+    border-radius: 2px;
+  }
+  .side-item.is-active .side-item__icon { color: var(--red); }
+  .side-item.is-active .side-item__label { color: var(--red); font-weight: 700; }
+  .side-item.is-active .side-item__chev { color: var(--red); }
+
+  .side-item__sublist {
+    list-style: none;
+    padding: 4px 0 12px 46px;
+    display: none;
+  }
+  .side-item.is-active .side-item__sublist { display: block; }
+  .side-item__sublist a {
+    display: block;
+    padding: 7px 8px 7px 16px;
+    font-size: 13.5px;
+    line-height: 1.4;
+    font-weight: 500;
+    color: var(--muted);
+    position: relative;
+    border-radius: 6px;
+    transition: color .2s, background .2s;
+  }
+  .side-item__sublist a:hover {
+    color: var(--ink);
+    background: rgba(20, 22, 28, 0.025);
+  }
+  .side-item__sublist a.is-active {
+    color: var(--red);
+    font-weight: 700;
+    background: var(--red-soft);
+  }
+  .side-item__sublist a.is-active::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--red);
+  }
+
+  .side-promo {
+    margin-top: auto;
+    padding: 18px 4px 4px;
+    border-top: 1px solid var(--line-soft);
+  }
+  .side-promo__row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 0 8px;
+    margin-bottom: 14px;
+  }
+  .side-promo__ico {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 1.5px solid var(--muted-2);
+    color: var(--muted-2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+    font-family: 'PT Serif', Georgia, serif;
+    font-style: italic;
+  }
+  .side-promo__txt {
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  .side-promo__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 8px;
+    padding: 10px 12px;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--red);
+    letter-spacing: -0.005em;
+    border-radius: 8px;
+    transition: gap .2s, background .2s;
+  }
+  .side-promo__cta:hover { gap: 12px; background: rgba(225, 29, 42, 0.05); }
+  .side-promo__cta svg { width: 13px; height: 13px; }
+
+  /* ================= ОСНОВНОЙ КОНТЕНТ ================= */
+  .main {
+    margin-left: calc(var(--side-w) + var(--side-gap) * 2);
+    padding: calc(var(--header-h) + var(--header-top) + 16px) 34px 28px 20px;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* хлебные крошки */
+  .crumbs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+  .crumbs a {
+    color: var(--muted);
+    font-weight: 500;
+    transition: color .2s;
+  }
+  .crumbs a:hover { color: var(--red); }
+  .crumbs .sep { color: var(--muted-2); }
+  .crumbs .current {
+    color: var(--red);
+    font-weight: 700;
+  }
+
+  /* ====================================================
+     СТИЛИ РАЗДЕЛА «ТЕХНОЛОГИЧЕСКОЕ ОБОРУДОВАНИЕ» (префикс eq-)
+     ==================================================== */
+  .eq-wrap {
+    container-type: inline-size;
+    container-name: eq;
+  }
+  .eq-geo, .eq-sections, .eq-info { max-width: 1320px; }
+
+  /* --- ВЕРХ: фото справа «растворяется» в общий фон, слева компактная панель --- */
+  :root { --eq-pad: 34px; }
+  .crumbs { position: relative; z-index: 3; }
+  .eq-hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: clamp(430px, 46cqw, 540px);
+    margin-bottom: 0;
+  }
+  /* фото уходит к правому краю экрана, со всех сторон плавно сливается с фоном */
+  .eq-hero__photo {
+    position: absolute;
+    top: -70px;
+    right: calc(-1 * var(--eq-pad));
+    bottom: 0;
+    width: calc(74% + var(--eq-pad));
+    z-index: 0;
+    pointer-events: none;
+  }
+  .eq-hero__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 62% 50%;
+    -webkit-mask-image:
+      linear-gradient(to right, transparent 0%, rgba(0,0,0,.4) 10%, black 28%, black 100%),
+      linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.35) 12%, black 32%, black 77%, rgba(0,0,0,.5) 91%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(to right, transparent 0%, rgba(0,0,0,.4) 10%, black 28%, black 100%),
+      linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.35) 12%, black 32%, black 77%, rgba(0,0,0,.5) 91%, transparent 100%);
+    mask-composite: intersect;
+  }
+  .eq-hero__panel {
+    position: relative;
+    z-index: 2;
+    width: min(100%, 420px);
+    padding: 28px 30px 30px;
+    background: rgba(255, 255, 255, 0.68);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 22px;
+    box-shadow: 0 14px 40px rgba(20, 30, 50, 0.14);
+  }
+  .eq-hero__label {
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 10px;
+  }
+  .eq-hero h1 {
+    font-size: clamp(30px, 2.9cqw, 42px);
+    line-height: 1.06;
+    letter-spacing: -0.025em;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .eq-hero h1 em {
+    font-family: 'PT Serif', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--red);
+  }
+  .eq-hero__text {
+    font-size: 15px;
+    line-height: 1.65;
+    font-weight: 500;
+    color: var(--ink-soft);
+  }
+
+  /* --- СТРАНЫ: плитки с флагами --- */
+  .eq-geo {
+    position: relative;
+    z-index: 2;
+    margin-top: 26px;
+    padding: 22px 22px 24px;
+    background: rgba(255, 255, 255, 0.78);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    border-radius: 22px;
+    box-shadow: 0 14px 40px rgba(20, 30, 50, 0.12);
+  }
+  .eq-geo__label {
+    margin: 0 4px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .eq-geo__list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    list-style: none;
+  }
+  .eq-country {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    min-width: 0;
+    padding: 14px 16px 14px 20px;
+    background: var(--white);
+    border: 1px solid var(--line-soft);
+    border-radius: 16px;
+    box-shadow: 0 2px 10px rgba(20, 22, 28, 0.06);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .eq-country:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 26px rgba(20, 22, 28, 0.12);
+  }
+  .eq-country__name {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .eq-country__flag {
+    flex: none;
+    width: 46px;
+    height: 34px;
+    object-fit: cover;
+    border-radius: 7px;
+    box-shadow: 0 0 0 1px rgba(20, 22, 28, 0.12), 0 4px 10px rgba(20, 22, 28, 0.14);
+  }
+  /* Китай: главный, крупнее */
+  .eq-country--first {
+    grid-column: span 2;
+    padding: 20px 24px 20px 28px;
+    background: linear-gradient(135deg, #fff 0%, #fff4f4 100%);
+    border: 1.5px solid rgba(225, 29, 42, 0.45);
+    box-shadow: 0 10px 28px rgba(225, 29, 42, 0.16);
+  }
+  .eq-country--first .eq-country__name {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--red);
+  }
+  .eq-country--first .eq-country__flag {
+    width: 72px;
+    height: 54px;
+    border-radius: 10px;
+  }
+
+  /* --- КАРТОЧКИ ПОДРАЗДЕЛОВ --- */
+  .eq-sections { margin-top: 30px; }
+  .eq-sections__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 16px;
+    padding: 9px 18px 9px 16px;
+    background: rgba(255, 255, 255, 0.82);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border-radius: 999px;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--red);
+  }
+  .eq-sections__label::before {
+    content: "";
+    width: 22px; height: 2px;
+    background: var(--red);
+  }
+
+  .eq-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    list-style: none;
+  }
+  .eq-grid > li { min-width: 0; }
+
+  .eq-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    height: 100%;
+    padding: 26px 24px 22px;
+    background: var(--white);
+    border: 1px solid var(--line-soft);
+    border-radius: 18px;
+    box-shadow: 0 2px 10px rgba(20, 22, 28, 0.05);
+    transition: transform .2s, box-shadow .2s, border-color .2s;
+  }
+  .eq-card:hover,
+  .eq-card:focus-visible {
+    transform: translateY(-3px);
+    border-color: rgba(225, 29, 42, 0.25);
+    box-shadow: 0 14px 34px rgba(20, 22, 28, 0.11);
+    outline: none;
+  }
+  .eq-card__num {
+    position: absolute;
+    top: 14px;
+    right: 22px;
+    font-size: 38px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: rgba(20, 22, 28, 0.07);
+  }
+  .eq-card__ico {
+    display: grid;
+    place-items: center;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: var(--red-soft);
+    color: var(--red);
+  }
+  .eq-card__ico svg { width: 26px; height: 26px; }
+  .eq-card__title {
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .eq-card__more {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--red);
+    transition: gap .2s;
+  }
+  .eq-card:hover .eq-card__more { gap: 13px; }
+  .eq-card__more svg { width: 14px; height: 14px; }
+
+  /* --- НИЖНЯЯ ПАНЕЛЬ --- */
+  .eq-info {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 28px;
+    padding: 30px 8px;
+    background: var(--white);
+    border: 1px solid var(--line-soft);
+    border-radius: 20px;
+    box-shadow: 0 2px 12px rgba(20, 22, 28, 0.05);
+  }
+  .eq-info__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 2px 30px;
+  }
+  .eq-info__item + .eq-info__item { border-left: 1px solid var(--line); }
+  .eq-info__ico {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 54px;
+    height: 54px;
+    border: 1.5px solid var(--red);
+    border-radius: 50%;
+    color: var(--red);
+  }
+  .eq-info__ico svg { width: 25px; height: 25px; }
+  .eq-info__text {
+    font-size: 15.5px;
+    line-height: 1.65;
+    font-weight: 500;
+    color: var(--ink-soft);
+  }
+  .eq-info__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+    height: 44px;
+    padding: 0 22px;
+    background: var(--red);
+    color: #fff;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background .2s, transform .2s, box-shadow .2s;
+  }
+  .eq-info__btn:hover {
+    background: var(--red-hov);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(225, 29, 42, 0.28);
+  }
+  .eq-info__btn svg { width: 15px; height: 15px; }
+
+  /* ================= АДАПТИВ: контейнер раздела ================= */
+  @container eq (max-width: 900px) {
+    .eq-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .eq-grid > li:last-child { grid-column: 1 / -1; }
+    .eq-geo__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .eq-info { grid-template-columns: 1fr; row-gap: 26px; }
+    .eq-info__item + .eq-info__item { border-left: 0; border-top: 1px solid var(--line); padding-top: 26px; }
+  }
+  @container eq (max-width: 560px) {
+    .eq-hero { min-height: 0; flex-direction: column; align-items: stretch; }
+    .eq-hero__photo { position: relative; top: 0; right: 0; bottom: 0; width: 100%; height: 250px; order: -1; }
+    .eq-hero__panel { width: 100%; margin-top: -30px; }
+    .eq-geo { padding: 18px 14px 20px; }
+    .eq-country { padding: 12px 12px 12px 14px; }
+    .eq-country__name { font-size: 14.5px; }
+    .eq-country--first { padding: 16px 16px 16px 18px; }
+    .eq-country--first .eq-country__name { font-size: 20px; }
+    .eq-country--first .eq-country__flag { width: 60px; height: 45px; }
+    .eq-grid { grid-template-columns: 1fr; }
+    .eq-grid > li:last-child { grid-column: auto; }
+    .eq-info__item { padding: 2px 18px; }
+  }
+
+  /* ================= АДАПТИВ: оболочка страницы ================= */
+  @media (max-width: 1280px) {
+    :root { --side-w: 260px; --eq-pad: 28px; }
+    .main { padding-left: 24px; padding-right: 28px; }
+  }
+  @media (max-width: 1080px) {
+    .topbar__nav ul { gap: 22px; }
+  }
+  @media (max-width: 860px) {
+    :root { --side-w: 0px; --header-h: 60px; --header-top: 12px; --header-side: 12px; }
+    .brand-fixed { width: 66px; left: 16px; top: 14px; }
+    .topbar { left: 92px; transform: none; padding: 0 8px 0 16px; gap: 10px; }
+    .topbar__nav { display: none; }
+    .topbar__cta { padding: 0 14px; height: 40px; font-size: 12.5px; }
+    .topbar__search { width: 38px; height: 38px; }
+    .sidebar {
+      position: relative;
+      top: 0; left: 0; right: 0; bottom: auto;
+      width: auto;
+      border-radius: 20px;
+      margin: calc(var(--header-h) + var(--header-top) + 20px) 12px 20px;
+      padding: 20px 14px;
+      max-height: none;
+      overflow: visible;
+    }
+    :root { --eq-pad: 20px; }
+    .main { margin-left: 0; padding: 0 20px 40px; }
+  }
+  @media (max-width: 520px) {
+    :root { --eq-pad: 16px; }
+    .main { padding: 0 16px 28px; }
+  }
+
+  /* ---- вложенные подпункты меню (стрелка справа) ---- */
+  .side-item__sublist .has-sub > .subrow { display: flex; align-items: center; gap: 2px; }
+  .side-item__sublist .has-sub > .subrow > a { flex: 1; min-width: 0; }
+  .subtoggle {
+    flex: none; width: 28px; height: 28px; border-radius: 8px;
+    display: grid; place-items: center;
+    color: var(--muted-2); transition: background .2s, color .2s;
+  }
+  .subtoggle:hover { background: rgba(20, 22, 28, 0.05); color: var(--red); }
+  .subtoggle svg { width: 14px; height: 14px; transition: transform .25s; }
+  .has-sub.is-open > .subrow .subtoggle { color: var(--red); }
+  .has-sub.is-open > .subrow .subtoggle svg { transform: rotate(180deg); }
+  .side-subsub {
+    list-style: none; display: none;
+    margin: 0 0 6px 16px; padding: 2px 0 4px 10px;
+    border-left: 1px solid var(--line);
+  }
+  .has-sub.is-open > .side-subsub { display: block; }
+  .side-item__sublist .side-subsub a { padding: 6px 8px; font-size: 13px; }
+  /* подпункты начинаются от левого края, на уровне иконок */
+  .side-item__sublist { padding: 4px 0 12px 0; }
+  .side-item__sublist > li > a,
+  .side-item__sublist .subrow > a { padding-left: 12px; }
+  .side-item__sublist .side-subsub { margin-left: 12px; }
+
+</style>
+</head>
+<body>
+
+<!-- ================= ЛОГОТИП ================= -->
+<a href="../index.html" class="brand-fixed" aria-label="МЕДБИОПАК — на главную">
+  <img src="../images/logo-medbiopak.png" alt="МЕДБИОПАК">
+</a>
+
+<!-- ================= HEADER ================= -->
+<header class="topbar">
+  <nav class="topbar__nav">
+    <ul>
+      <li><a href="../index.html#main">О нас</a></li>
+      <li><a href="../index.html#main" class="is-active">Продукция</a></li>
+      <li><a href="../index.html#library">Библиотека</a></li>
+      <li><a href="#">Контакты</a></li>
+    </ul>
+  </nav>
+  <div class="topbar__right">
+    <button class="topbar__search" aria-label="Поиск">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="7"/>
+        <line x1="20" y1="20" x2="16.5" y2="16.5"/>
+      </svg>
+    </button>
+    <a href="#" class="topbar__cta">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+      Задать вопрос
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+    </a>
+  </div>
+</header>
+
+<!-- ================= SIDEBAR ================= -->
+<aside class="sidebar" aria-label="Разделы продукции">
+  <div class="sidebar__title">
+    <span class="sidebar__title-ico">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7" rx="1"/>
+        <rect x="14" y="3" width="7" height="7" rx="1"/>
+        <rect x="3" y="14" width="7" height="7" rx="1"/>
+        <rect x="14" y="14" width="7" height="7" rx="1"/>
+      </svg>
+    </span>
+    <span>Продукция</span>
+  </div>
+
+  <nav class="side-nav">
+    <!-- Твёрдые капсулы -->
+    <div class="side-item">
+      <a href="../capsules/capsules.html" class="side-item__head">
+        <span class="side-item__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15.5 3.5a5 5 0 0 1 5 5v0a5 5 0 0 1-1.46 3.54l-6.5 6.5A5 5 0 1 1 5.46 11.46l6.5-6.5A5 5 0 0 1 15.5 3.5z"/>
+            <path d="M8.75 8.75l6.5 6.5"/>
+          </svg>
+        </span>
+        <span class="side-item__label">Твёрдые капсулы</span>
+        <svg class="side-item__chev side-item__chev--right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </a>
+      <ul class="side-item__sublist">
+        <li><a href="../capsules/capsules-gs-about.html">О компании GS Capsule</a></li>
+        <li><a href="../capsules/capsules-gelatin.html">Желатиновые капсулы</a></li>
+        <li><a href="../capsules/capsules-cellulose.html">Целлюлозные капсулы</a></li>
+        <li><a href="../capsules/capsules-pullulan.html">Пуллулановые капсулы</a></li>
+        <li><a href="../capsules/capsules-design.html">Дизайн капсул GS Capsule</a></li>
+        <li><a href="../capsules/capsules-colors.html">Цветовые решения</a></li>
+        <li><a href="../capsules/capsules-print.html">Виды печати</a></li>
+        <li><a href="../capsules/capsules-packing.html">Упаковка, транспортировка и хранение</a></li>
+      </ul>
+    </div>
+
+    <!-- Технологическое оборудование -->
+    <div class="side-item is-active">
+      <a href="equipment.html" class="side-item__head">
+        <span class="side-item__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>
+          </svg>
+        </span>
+        <span class="side-item__label">Технологическое<br>оборудование</span>
+        <svg class="side-item__chev side-item__chev--down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </a>
+      <ul class="side-item__sublist">
+        <li class="has-sub">
+          <div class="subrow">
+            <a href="#">Ручное капсулонаполняющее оборудование</a>
+            <button type="button" class="subtoggle" aria-expanded="false" aria-label="Показать подразделы"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+          </div>
+          <ul class="side-subsub">
+            <li><a href="#">Подраздел 1</a></li>
+            <li><a href="#">Подраздел 2</a></li>
+            <li><a href="#">Подраздел 3</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Полуавтоматическое капсулонаполняющее оборудование</a></li>
+        <li><a href="#">Автоматическое капсулонаполняющее оборудование</a></li>
+        <li><a href="#">Распылительные форсунки</a></li>
+        <li><a href="#">Счётно-фасовочное оборудование</a></li>
+        <li><a href="#">3D смесители для порошков</a></li>
+        <li><a href="#">Оборудование для укупорки</a></li>
+        <li><a href="#">Этикетировочное оборудование</a></li>
+        <li><a href="#">Складские позиции</a></li>
+      </ul>
+    </div>
+
+    <!-- Упаковочные материалы -->
+    <div class="side-item">
+      <a href="#" class="side-item__head">
+        <span class="side-item__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 3h6v3H9z"/>
+            <path d="M8 6h8l1 3v10a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V9l1-3z"/>
+            <line x1="9" y1="13" x2="15" y2="13"/>
+          </svg>
+        </span>
+        <span class="side-item__label">Упаковочные материалы</span>
+        <svg class="side-item__chev side-item__chev--right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </a>
+    </div>
+
+    <!-- Активные ингредиенты -->
+    <div class="side-item">
+      <a href="../index.html#ingredients" class="side-item__head">
+        <span class="side-item__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 4C10 4 4 10 4 20c8 0 14-4 16-16z"/>
+            <path d="M4 20c4-4 8-7 16-16"/>
+          </svg>
+        </span>
+        <span class="side-item__label">Активные ингредиенты</span>
+        <svg class="side-item__chev side-item__chev--right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Промо-плашка -->
+  <div class="side-promo">
+    <div class="side-promo__row">
+      <span class="side-promo__ico">i</span>
+      <span class="side-promo__txt">Индивидуальные решения<br>под ваши задачи</span>
+    </div>
+    <a href="#" class="side-promo__cta">
+      Получить консультацию
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+      </svg>
+    </a>
+  </div>
+</aside>
+
+<!-- ================= КОНТЕНТ ================= -->
+<main class="main">
+
+  <nav class="crumbs" aria-label="Хлебные крошки">
+    <a href="../index.html">Главная</a>
+    <span class="sep">/</span>
+    <span class="current">Технологическое оборудование</span>
+  </nav>
+
+  <div class="eq-wrap">
+
+    <!-- HERO: фото справа как фон, слева компактная панель -->
+    <section class="eq-hero" aria-labelledby="eq-title">
+      <div class="eq-hero__photo"><img src="../images/hero-equipment.jpg" width="1440" height="1080" alt="Капсулонаполняющее оборудование — крупным планом"></div>
+      <div class="eq-hero__panel">
+        <div class="eq-hero__label">Продукция</div>
+        <h1 id="eq-title">Технологическое <em>оборудование</em></h1>
+        <p class="eq-hero__text">Наша компания предлагает технологическое и&nbsp;упаковочное оборудование, а&nbsp;также комплектующие от&nbsp;производителей из&nbsp;Китая, Англии, Германии, Италии, Канады, США и&nbsp;Южной Кореи.</p>
+      </div>
+    </section>
+
+    <!-- СТРАНЫ -->
+    <section class="eq-geo" aria-labelledby="eq-geo-title">
+      <div class="eq-geo__label" id="eq-geo-title">Оборудование от производителей из</div>
+      <ul class="eq-geo__list">
+        <li class="eq-country eq-country--first"><span class="eq-country__name">Китай</span><img class="eq-country__flag" src="../images/flags/cn.svg" alt="Флаг: Китай" loading="lazy"></li>
+        <li class="eq-country"><span class="eq-country__name">Англия</span><img class="eq-country__flag" src="../images/flags/gb.svg" alt="Флаг: Англия" loading="lazy"></li>
+        <li class="eq-country"><span class="eq-country__name">Германия</span><img class="eq-country__flag" src="../images/flags/de.svg" alt="Флаг: Германия" loading="lazy"></li>
+        <li class="eq-country"><span class="eq-country__name">Италия</span><img class="eq-country__flag" src="../images/flags/it.svg" alt="Флаг: Италия" loading="lazy"></li>
+        <li class="eq-country"><span class="eq-country__name">Канада</span><img class="eq-country__flag" src="../images/flags/ca.svg" alt="Флаг: Канада" loading="lazy"></li>
+        <li class="eq-country"><span class="eq-country__name">США</span><img class="eq-country__flag" src="../images/flags/us.svg" alt="Флаг: США" loading="lazy"></li>
+        <li class="eq-country"><span class="eq-country__name">Южная Корея</span><img class="eq-country__flag" src="../images/flags/kr.svg" alt="Флаг: Южная Корея" loading="lazy"></li>
+      </ul>
+    </section>
+
+    <!-- ПОДРАЗДЕЛЫ -->
+    <section class="eq-sections" aria-labelledby="eq-sections-title">
+      <div class="eq-sections__label" id="eq-sections-title">Подробнее в разделах</div>
+      <ul class="eq-grid">
+      <li>
+        <a class="eq-card" href="#">
+          <span class="eq-card__num">01</span>
+          <span class="eq-card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2"/><path d="M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg></span>
+          <h3 class="eq-card__title">Ручное капсулонаполняющее оборудование</h3>
+          <span class="eq-card__more">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+        </a>
+      </li>
+      <li>
+        <a class="eq-card" href="#">
+          <span class="eq-card__num">02</span>
+          <span class="eq-card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg></span>
+          <h3 class="eq-card__title">Полуавтоматическое капсулонаполняющее оборудование</h3>
+          <span class="eq-card__more">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+        </a>
+      </li>
+      <li>
+        <a class="eq-card" href="#">
+          <span class="eq-card__num">03</span>
+          <span class="eq-card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></span>
+          <h3 class="eq-card__title">Автоматическое капсулонаполняющее оборудование</h3>
+          <span class="eq-card__more">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+        </a>
+      </li>
+      <li>
+        <a class="eq-card" href="#">
+          <span class="eq-card__num">04</span>
+          <span class="eq-card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"/></svg></span>
+          <h3 class="eq-card__title">Распылительные форсунки</h3>
+          <span class="eq-card__more">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+        </a>
+      </li>
+      <li>
+        <a class="eq-card" href="#">
+          <span class="eq-card__num">05</span>
+          <span class="eq-card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span>
+          <h3 class="eq-card__title">Счётно-фасовочное оборудование</h3>
+          <span class="eq-card__more">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+        </a>
+      </li>
+      <li>
+        <a class="eq-card" href="#">
+          <span class="eq-card__num">06</span>
+          <span class="eq-card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16.466 7.5C15.643 4.237 13.952 2 12 2 9.239 2 7 6.477 7 12s2.239 10 5 10c.342 0 .677-.069 1-.2"/><path d="m15.194 13.707 3.814 1.86-1.86 3.814"/><path d="M19 15.57c-1.804.885-4.274 1.43-7 1.43-5.523 0-10-2.239-10-5s4.477-5 10-5c4.838 0 8.873 1.718 9.8 4"/></svg></span>
+          <h3 class="eq-card__title">3D смесители для порошков</h3>
+          <span class="eq-card__more">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+        </a>
+      </li>
+      <li>
+        <a class="eq-card" href="#">
+          <span class="eq-card__num">07</span>
+          <span class="eq-card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2h6v3H9z"/><path d="M8 5h8l1 3v12a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V8l1-3z"/><line x1="9" y1="13" x2="15" y2="13"/></svg></span>
+          <h3 class="eq-card__title">Оборудование для укупорки</h3>
+          <span class="eq-card__more">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+        </a>
+      </li>
+      <li>
+        <a class="eq-card" href="#">
+          <span class="eq-card__num">08</span>
+          <span class="eq-card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg></span>
+          <h3 class="eq-card__title">Этикетировочное оборудование</h3>
+          <span class="eq-card__more">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+        </a>
+      </li>
+      <li>
+        <a class="eq-card" href="#">
+          <span class="eq-card__num">09</span>
+          <span class="eq-card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 8.35V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8.35A2 2 0 0 1 3.26 6.5l8-3.2a2 2 0 0 1 1.48 0l8 3.2A2 2 0 0 1 22 8.35Z"/><path d="M6 18h12"/><path d="M6 14h12"/><rect width="12" height="12" x="6" y="10"/></svg></span>
+          <h3 class="eq-card__title">Складские позиции</h3>
+          <span class="eq-card__more">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+        </a>
+      </li>
+      </ul>
+    </section>
+
+    <!-- НИЖНЯЯ ПАНЕЛЬ -->
+    <section class="eq-info" aria-label="Запасные части и консультация">
+      <div class="eq-info__item">
+        <span class="eq-info__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg></span>
+        <p class="eq-info__text">Кроме того, мы предлагаем услуги по&nbsp;поставке запасных частей для&nbsp;различных видов технологического оборудования, в&nbsp;т.ч. и&nbsp;со&nbsp;склада в&nbsp;Москве.</p>
+      </div>
+      <div class="eq-info__item">
+        <span class="eq-info__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+        <div>
+          <p class="eq-info__text">Более подробную информацию Вы&nbsp;сможете узнать, посетив соответствующие разделы на&nbsp;нашем сайте, либо позвонив к&nbsp;нам в&nbsp;офис.</p>
+          <a href="#" class="eq-info__btn">Связаться с нами <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<script>
+document.querySelectorAll('.subtoggle').forEach(function (b) {
+  b.addEventListener('click', function (e) {
+    e.preventDefault();
+    var li = b.closest('.has-sub');
+    b.setAttribute('aria-expanded', li.classList.toggle('is-open'));
+  });
+});
+</script>
+
+<!-- Заглушка для разделов в разработке -->
+<style>
+.wip-toast{position:fixed;left:50%;bottom:32px;transform:translate(-50%,20px);background:#1a1a1a;color:#fff;font:600 14px/1.4 'Manrope',system-ui,sans-serif;padding:13px 22px;border-radius:999px;box-shadow:0 10px 30px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:99999;white-space:nowrap}
+.wip-toast.is-on{opacity:1;transform:translate(-50%,0)}
+@media (max-width:520px){.wip-toast{white-space:normal;width:calc(100% - 32px);text-align:center;border-radius:18px}}
+</style>
+<script>
+(function(){
+  var t=document.createElement('div');t.className='wip-toast';t.textContent='Этот раздел находится в разработке';
+  document.body.appendChild(t);var timer;
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a[href="#"]');
+    if(!a)return;
+    e.preventDefault();e.stopImmediatePropagation();
+    t.classList.add('is-on');clearTimeout(timer);
+    timer=setTimeout(function(){t.classList.remove('is-on')},2200);
+  },true);
+})();
+</script>
+</body>
+</html>

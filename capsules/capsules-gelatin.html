@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Желатиновые капсулы — МЕДБИОПАК</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=PT+Serif:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink:       #14161c;
+    --ink-soft:  #3d434e;
+    --muted:     rgba(20, 22, 28, 0.55);
+    --muted-2:   rgba(20, 22, 28, 0.42);
+    --line:      rgba(20, 22, 28, 0.10);
+    --line-soft: rgba(20, 22, 28, 0.06);
+    --red:       #E11D2A;
+    --red-soft:  rgba(225, 29, 42, 0.08);
+    --red-hov:   #c5171f;
+    --bg:        #eef0f4;
+    --white:     #ffffff;
+
+    --header-h:    66px;
+    --header-top:  16px;
+    --header-side: 20px;
+
+    --side-w:      290px;
+    --side-gap:    18px;
+
+    --brand-w:     97px;
+  }
+
+  html, body {
+    background: var(--bg);
+    background-image: url('../images/bg-print.jpg');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-weight: 400;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+  body { overflow-x: hidden; position: relative; }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; background: none; border: none; cursor: pointer; }
+
+  /* ================= ФОНОВОЕ ФОТО ================= */
+  .hero-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 64%;
+    height: 62vh;
+    max-height: 560px;
+    min-height: 400px;
+    background-image: url('../images/hero-gelatin.png');
+    background-size: cover;
+    background-position: 50% center;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .hero-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg,
+      var(--bg) 0%,
+      rgba(238, 240, 244, 0.92) 8%,
+      rgba(238, 240, 244, 0.40) 24%,
+      rgba(238, 240, 244, 0.00) 42%);
+  }
+  .hero-bg::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 38%;
+    background: linear-gradient(to bottom,
+      rgba(238, 240, 244, 0) 0%,
+      rgba(238, 240, 244, 0.75) 60%,
+      var(--bg) 100%);
+  }
+
+  /* ================= ЛОГОТИП ================= */
+  .brand-fixed {
+    position: fixed;
+    top: 28px;
+    left: calc(var(--side-gap) + (var(--side-w) - var(--brand-w)) / 2);   /* по центру над боковой панелью */
+    z-index: 60;
+    display: block;
+    width: var(--brand-w);
+  }
+  .brand-fixed img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.7));
+  }
+
+  /* ================= HEADER ================= */
+  .topbar {
+    position: fixed;
+    top: var(--header-top);
+    left: 50%;
+    transform: translateX(-50%);
+    right: auto;
+    height: var(--header-h);
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(22px) saturate(140%);
+    -webkit-backdrop-filter: blur(22px) saturate(140%);
+    border-radius: 999px;
+    border: 1px solid rgba(20, 22, 28, 0.12);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.6) inset,
+      0 10px 30px rgba(20, 22, 28, 0.10);
+    display: inline-flex;
+    align-items: center;
+    padding: 0 10px 0 32px;
+    gap: 18px;
+    white-space: nowrap;
+  }
+  .topbar__nav { flex: 0 0 auto; }
+  .topbar__nav ul {
+    list-style: none;
+    display: flex;
+    gap: 26px;
+    justify-content: center;
+  }
+  .topbar__nav a {
+    display: inline-block;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: rgba(20, 22, 28, 0.78);
+    letter-spacing: -0.005em;
+    padding: 6px 2px;
+    position: relative;
+    transition: color .2s;
+  }
+  .topbar__nav a::after {
+    content: "";
+    position: absolute;
+    left: 2px; right: 2px;
+    bottom: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .25s ease;
+  }
+  .topbar__nav a:hover,
+  .topbar__nav a.is-active { color: var(--ink); }
+  .topbar__nav a.is-active::after,
+  .topbar__nav a:hover::after { transform: scaleX(1); }
+
+  .topbar__right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .topbar__search {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink);
+    transition: background .2s, color .2s;
+  }
+  .topbar__search:hover { background: rgba(20, 22, 28, 0.06); }
+  .topbar__search svg { width: 18px; height: 18px; }
+
+  .topbar__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    height: 42px;
+    padding: 0 20px;
+    background: var(--red);
+    color: #fff;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1;
+    letter-spacing: -0.005em;
+    transition: background .2s, transform .2s, box-shadow .2s;
+  }
+  .topbar__cta:hover {
+    background: var(--red-hov);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(225, 29, 42, 0.28);
+  }
+  .topbar__cta svg { width: 15px; height: 15px; }
+
+  /* ================= SIDEBAR ================= */
+  .sidebar {
+    position: fixed;
+    top: 176px;
+    left: var(--side-gap);
+    bottom: var(--side-gap);
+    width: var(--side-w);
+    z-index: 40;
+    background: var(--white);
+    border-radius: 22px;
+    padding: 22px 18px 22px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.6) inset,
+      0 10px 36px rgba(20, 22, 28, 0.08);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(20, 22, 28, 0.15) transparent;
+  }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: rgba(20, 22, 28, 0.12); border-radius: 2px; }
+
+  .sidebar__title {
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink);
+    padding: 4px 10px 22px 22px;
+    border-bottom: 2px solid rgba(20, 22, 28, 0.12);
+    margin-bottom: 14px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .sidebar__title-ico {
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    background: var(--red-soft);
+    color: var(--red);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .sidebar__title-ico svg { width: 15px; height: 15px; }
+  .sidebar__title::after {
+    content: "";
+    position: absolute;
+    left: 22px;
+    bottom: -2px;
+    width: 40px;
+    height: 2px;
+    background: var(--red);
+  }
+
+  .side-nav { display: flex; flex-direction: column; }
+  .side-item { position: relative; }
+  .side-item + .side-item {
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .side-item__head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 12px;
+    border-radius: 10px;
+    color: var(--ink);
+    position: relative;
+    transition: background .2s, color .2s;
+  }
+  .side-item__head:hover { background: rgba(20, 22, 28, 0.025); }
+
+  .side-item__icon {
+    width: 26px;
+    height: 26px;
+    color: var(--ink-soft);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: color .2s;
+  }
+  .side-item__icon svg { width: 22px; height: 22px; }
+
+  .side-item__label {
+    flex: 1;
+    font-size: 14.5px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    line-height: 1.25;
+  }
+
+  .side-item__chev {
+    width: 14px; height: 14px;
+    color: var(--muted-2);
+    flex-shrink: 0;
+    transition: transform .25s, color .2s;
+  }
+  .side-item__chev--down { transform: rotate(0deg); }
+  .side-item__chev--right { transform: rotate(-90deg); }
+
+  .side-item.is-active > .side-item__head::before {
+    content: "";
+    position: absolute;
+    left: -4px;
+    top: 6px;
+    bottom: 6px;
+    width: 3px;
+    background: var(--red);
+    border-radius: 2px;
+  }
+  .side-item.is-active .side-item__icon { color: var(--red); }
+  .side-item.is-active .side-item__label { color: var(--red); font-weight: 700; }
+  .side-item.is-active .side-item__chev { color: var(--red); }
+
+  .side-item__sublist {
+    list-style: none;
+    padding: 4px 0 12px 46px;
+    display: none;
+  }
+  .side-item.is-active .side-item__sublist { display: block; }
+  .side-item__sublist a {
+    display: block;
+    padding: 7px 8px 7px 16px;
+    font-size: 13.5px;
+    line-height: 1.4;
+    font-weight: 500;
+    color: var(--muted);
+    position: relative;
+    border-radius: 6px;
+    transition: color .2s, background .2s;
+  }
+  .side-item__sublist a:hover {
+    color: var(--ink);
+    background: rgba(20, 22, 28, 0.025);
+  }
+  .side-item__sublist a.is-active {
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .side-item__sublist a.is-active::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--red);
+  }
+
+  .side-promo {
+    margin-top: auto;
+    padding: 18px 4px 4px;
+    border-top: 1px solid var(--line-soft);
+  }
+  .side-promo__row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 0 8px;
+    margin-bottom: 14px;
+  }
+  .side-promo__ico {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 1.5px solid var(--muted-2);
+    color: var(--muted-2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+    font-family: 'PT Serif', Georgia, serif;
+    font-style: italic;
+  }
+  .side-promo__txt {
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  .side-promo__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 8px;
+    padding: 10px 12px;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--red);
+    letter-spacing: -0.005em;
+    border-radius: 8px;
+    transition: gap .2s, background .2s;
+  }
+  .side-promo__cta:hover { gap: 12px; background: rgba(225, 29, 42, 0.05); }
+  .side-promo__cta svg { width: 13px; height: 13px; }
+
+  /* ================= ОСНОВНОЙ КОНТЕНТ ================= */
+  .main {
+    margin-left: calc(var(--side-w) + var(--side-gap) * 2);
+    padding: calc(var(--header-h) + var(--header-top) + 16px) 34px 28px 20px;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* хлебные крошки */
+  .crumbs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+  .crumbs a {
+    color: var(--muted);
+    font-weight: 500;
+    transition: color .2s;
+  }
+  .crumbs a:hover { color: var(--red); }
+  .crumbs .sep { color: var(--muted-2); }
+  .crumbs .current {
+    color: var(--red);
+    font-weight: 700;
+  }
+
+  /* ====================================================
+     СТИЛИ РАЗДЕЛА «ЖЕЛАТИНОВЫЕ КАПСУЛЫ»  (префикс gel-)
+     ==================================================== */
+
+  /* --- HERO --- */
+  .gel-hero {
+    position: relative;
+    padding-bottom: 28px;
+    max-width: 100%;
+  }
+  .gel-hero__text {
+    max-width: 480px;
+    position: relative;
+    z-index: 2;
+  }
+  /* rule removed */
+  .gel-hero h1 {
+    font-size: clamp(34px, 3vw, 46px);
+    line-height: 1.03;
+    letter-spacing: -0.028em;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .gel-hero h1 em {
+    font-family: 'PT Serif', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--red);
+  }
+  .gel-hero__sub {
+    font-size: 17px;
+    line-height: 1.45;
+    color: var(--ink-soft);
+    font-weight: 500;
+    margin-bottom: 12px;
+    max-width: 440px;
+  }
+  .gel-hero__lead {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--muted);
+    max-width: 480px;
+    margin-bottom: 28px;
+  }
+
+  /* три фичи под hero-текстом */
+  .gel-features {
+    display: flex;
+    gap: 24px;
+    flex-wrap: nowrap;
+    list-style: none;
+    max-width: 600px;
+  }
+  .gel-feature {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  .gel-feature__ico {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--red-soft);
+    color: var(--red);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .gel-feature__ico svg { width: 16px; height: 16px; }
+  .gel-feature__txt {
+    font-size: 12.5px;
+    line-height: 1.3;
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* --- 4 КАРТОЧКИ ПОКАЗАТЕЛЕЙ --- */
+  .gel-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin: 28px 0 32px;
+  }
+  .gel-stat {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--white);
+    border: 1px solid var(--line-soft);
+    border-radius: 14px;
+    padding: 18px 16px;
+    box-shadow: 0 2px 6px rgba(20, 22, 28, 0.04);
+    transition: transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s ease;
+  }
+  .gel-stat:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(20, 22, 28, 0.08);
+  }
+  .gel-stat__ico {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--red-soft);
+    color: var(--red);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .gel-stat__ico svg { width: 18px; height: 18px; }
+  .gel-stat__value {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--red);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .gel-stat__label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.25;
+    margin-top: 2px;
+  }
+  .gel-stat__desc {
+    font-size: 11.5px;
+    color: var(--muted);
+    line-height: 1.3;
+    margin-top: 1px;
+  }
+
+  /* --- СЕКЦИЯ ТАБЛИЦЫ (обёрнута в единую белую карточку) --- */
+  .gel-tech-card {
+    background: var(--white);
+    border: 1px solid var(--line-soft);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(20, 22, 28, 0.04);
+    margin-bottom: 18px;
+  }
+  .gel-tech-head {
+    display: flex;
+    align-items: flex-end;
+    gap: 40px;
+    padding: 28px 28px 22px;
+    border-bottom: 1px solid var(--line);
+  }
+  .gel-tech-head__left {
+    flex-shrink: 0;
+  }
+  .gel-tech-head__title {
+    font-size: clamp(24px, 2vw, 30px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    line-height: 1.1;
+    margin-bottom: 0;
+  }
+  .gel-tech-head__rule {
+    width: 44px;
+    height: 3px;
+    background: var(--red);
+    border-radius: 999px;
+    margin-top: 12px;
+  }
+  .gel-tech-head__desc {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 420px;
+    padding: 14px 18px;
+    background: rgba(20, 22, 28, 0.025);
+    border-left: 3px solid var(--red);
+    border-radius: 0 10px 10px 0;
+    margin-bottom: 4px;
+  }
+
+  /* двухколоночная раскладка: таблица-карточка + боковая панель */
+  .gel-tech-grid {
+    display: grid;
+    grid-template-columns: 1fr 310px;
+    gap: 14px;
+    align-items: start;
+  }
+
+  /* таблица (внутри .gel-tech-card, без собственной карточки) */
+  .gel-table-card {
+    /* карточка убрана — таблица внутри .gel-tech-card */
+  }
+  .gel-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .gel-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11.5px;
+    line-height: 1.3;
+    white-space: nowrap;
+  }
+  .gel-table thead th {
+    background: #eef0f4;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    text-align: center;
+    padding: 14px 8px;
+    line-height: 1.25;
+    border-bottom: 2px solid var(--line);
+    border-right: 1px solid rgba(20, 22, 28, 0.08);
+    white-space: normal;
+    min-width: 62px;
+    vertical-align: middle;
+  }
+  .gel-table thead th:first-child {
+    text-align: center;
+    min-width: 52px;
+    padding-left: 14px;
+  }
+  .gel-table thead th:last-child {
+    border-right: none;
+  }
+  .gel-table tbody td {
+    text-align: center;
+    padding: 9px 8px;
+    border-bottom: 1px solid var(--line-soft);
+    border-right: 1px solid rgba(20, 22, 28, 0.05);
+    font-size: 11.5px;
+    color: var(--ink);
+    font-weight: 400;
+    vertical-align: middle;
+  }
+  .gel-table tbody td:last-child { border-right: none; }
+  .gel-table tbody tr:last-child td { border-bottom: none; }
+  .gel-table tbody td:first-child {
+    color: var(--red);
+    font-weight: 700;
+    font-size: 13px;
+    padding-left: 14px;
+  }
+  .gel-table tbody tr:hover td {
+    background: rgba(225, 29, 42, 0.02);
+  }
+
+  /* сноска */
+  .gel-footnote {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 28px 18px;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  .gel-footnote__ico {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--red-soft);
+    color: var(--red);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'PT Serif', Georgia, serif;
+    font-style: italic;
+  }
+  .gel-footnote b {
+    color: var(--ink);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: rgba(20, 22, 28, 0.20);
+    text-underline-offset: 2px;
+  }
+
+  /* --- БОКОВАЯ ПАНЕЛЬ --- */
+  .gel-side {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .gel-side-card {
+    background: var(--white);
+    border: 1px solid var(--line-soft);
+    border-radius: 14px;
+    padding: 22px 20px;
+    box-shadow: 0 2px 6px rgba(20, 22, 28, 0.04);
+  }
+  .gel-side-card__title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+  }
+  .gel-side-card__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--line-soft);
+    font-size: 13px;
+    line-height: 1.35;
+  }
+  .gel-side-card__row:last-child { border-bottom: none; }
+  .gel-side-card__key {
+    color: var(--muted);
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  .gel-side-card__val {
+    color: var(--ink);
+    font-weight: 600;
+    text-align: right;
+  }
+
+  /* CTA-баннер (полная ширина под таблицей) */
+  .gel-cta-banner {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    background: var(--white);
+    border: 1px solid rgba(225, 29, 42, 0.12);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-top: 18px;
+    box-shadow: 0 2px 6px rgba(20, 22, 28, 0.04);
+  }
+  .gel-cta-banner__ico {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--red-soft);
+    color: var(--red);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .gel-cta-banner__ico svg { width: 20px; height: 20px; }
+  .gel-cta-banner__body {
+    flex: 1;
+  }
+  .gel-cta-banner__title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.25;
+    margin-bottom: 4px;
+  }
+  .gel-cta-banner__desc {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+  .gel-cta-banner__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    height: 44px;
+    padding: 0 28px;
+    background: var(--red);
+    color: #fff;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 14.5px;
+    line-height: 1;
+    letter-spacing: -0.005em;
+    transition: background .2s, transform .2s, box-shadow .2s;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .gel-cta-banner__btn:hover {
+    background: var(--red-hov);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(225, 29, 42, 0.28);
+  }
+  .gel-cta-banner__btn svg { width: 14px; height: 14px; }
+
+  /* ================= АДАПТИВ ================= */
+  @media (max-width: 1280px) {
+    :root { --side-w: 260px; }
+    .main { padding-left: 24px; padding-right: 28px; }
+    .gel-tech-grid { grid-template-columns: 1fr 280px; }
+  }
+  @media (max-width: 1080px) {
+    .topbar__nav ul { gap: 22px; }
+    .gel-stats { grid-template-columns: repeat(2, 1fr); }
+    .gel-tech-grid { grid-template-columns: 1fr; }
+    .gel-side { flex-direction: row; }
+    .gel-side-card { flex: 1; }
+    .hero-bg { width: 55%; }
+    .gel-cta-banner { flex-wrap: wrap; }
+    .gel-tech-head { flex-direction: column; gap: 12px; align-items: flex-start; }
+  }
+  @media (max-width: 860px) {
+    :root { --side-w: 0px; --header-h: 60px; --header-top: 12px; --header-side: 12px; }
+    .brand-fixed { width: 66px; left: 16px; top: 14px; }
+    .topbar { left: 92px; transform: none; padding: 0 8px 0 16px; gap: 10px; }
+    .topbar__nav { display: none; }
+    .topbar__cta { padding: 0 14px; height: 40px; font-size: 12.5px; }
+    .topbar__search { width: 38px; height: 38px; }
+    .sidebar {
+      position: relative;
+      top: 0; left: 0; right: 0; bottom: auto;
+      width: auto;
+      border-radius: 20px;
+      margin: calc(var(--header-h) + var(--header-top) + 20px) 12px 20px;
+      padding: 20px 14px;
+      max-height: none;
+      overflow: visible;
+    }
+    .main {
+      margin-left: 0;
+      padding: 0 20px 40px;
+    }
+    .hero-bg { display: none; }
+    .gel-hero h1 { font-size: 36px; }
+    .gel-hero__sub { font-size: 16px; }
+    .gel-hero__lead { font-size: 14px; }
+    .gel-hero__text { max-width: 100%; }
+    .gel-features { flex-wrap: wrap; gap: 14px; }
+    .gel-feature { flex: 0 0 calc(50% - 7px); }
+    .gel-side { flex-direction: column; }
+    .gel-cta-banner { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .gel-tech-head { padding: 20px 18px 16px; }
+    .gel-footnote { padding: 14px 18px; }
+  }
+  @media (max-width: 520px) {
+    .gel-stats { grid-template-columns: 1fr; }
+    .gel-hero h1 { font-size: 32px; }
+    .gel-features { flex-direction: column; }
+    .gel-feature { flex: none; }
+    .gel-cta-banner__btn { width: 100%; justify-content: center; }
+  }
+
+  /* ---- вложенные подпункты меню (стрелка справа) ---- */
+  .side-item__sublist .has-sub > .subrow { display: flex; align-items: center; gap: 2px; }
+  .side-item__sublist .has-sub > .subrow > a { flex: 1; min-width: 0; }
+  .subtoggle {
+    flex: none; width: 28px; height: 28px; border-radius: 8px;
+    display: grid; place-items: center;
+    color: var(--muted-2); transition: background .2s, color .2s;
+  }
+  .subtoggle:hover { background: rgba(20, 22, 28, 0.05); color: var(--red); }
+  .subtoggle svg { width: 14px; height: 14px; transition: transform .25s; }
+  .has-sub.is-open > .subrow .subtoggle { color: var(--red); }
+  .has-sub.is-open > .subrow .subtoggle svg { transform: rotate(180deg); }
+  .side-subsub {
+    list-style: none; display: none;
+    margin: 0 0 6px 16px; padding: 2px 0 4px 10px;
+    border-left: 1px solid var(--line);
+  }
+  .has-sub.is-open > .side-subsub { display: block; }
+  .side-item__sublist .side-subsub a { padding: 6px 8px; font-size: 13px; }
+  /* подпункты начинаются от левого края, на уровне иконок */
+  .side-item__sublist { padding: 4px 0 12px 0; }
+  .side-item__sublist > li > a,
+  .side-item__sublist .subrow > a { padding-left: 12px; }
+  .side-item__sublist .side-subsub { margin-left: 12px; }
+</style>
+</head>
+<body>
+
+<!-- Фоновое фото капсул -->
+<div class="hero-bg" aria-hidden="true"></div>
+
+<!-- ================= ЛОГОТИП ================= -->
+<a href="../index.html" class="brand-fixed" aria-label="МЕДБИОПАК — на главную">
+  <img src="../images/logo-medbiopak.png" alt="МЕДБИОПАК">
+</a>
+
+<!-- ================= HEADER ================= -->
+<header class="topbar">
+  <nav class="topbar__nav">
+    <ul>
+      <li><a href="../index.html#main">О нас</a></li>
+      <li><a href="../index.html#main" class="is-active">Продукция</a></li>
+      <li><a href="../index.html#library">Библиотека</a></li>
+      <li><a href="#">Контакты</a></li>
+    </ul>
+  </nav>
+  <div class="topbar__right">
+    <button class="topbar__search" aria-label="Поиск">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="7"/>
+        <line x1="20" y1="20" x2="16.5" y2="16.5"/>
+      </svg>
+    </button>
+    <a href="#" class="topbar__cta">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+      Задать вопрос
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+    </a>
+  </div>
+</header>
+
+<!-- ================= SIDEBAR ================= -->
+<aside class="sidebar" aria-label="Разделы продукции">
+  <div class="sidebar__title">
+    <span class="sidebar__title-ico">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7" rx="1"/>
+        <rect x="14" y="3" width="7" height="7" rx="1"/>
+        <rect x="3" y="14" width="7" height="7" rx="1"/>
+        <rect x="14" y="14" width="7" height="7" rx="1"/>
+      </svg>
+    </span>
+    <span>Продукция</span>
+  </div>
+
+  <nav class="side-nav">
+    <!-- Твёрдые капсулы — АКТИВНЫЙ раздел -->
+    <div class="side-item is-active">
+      <a href="capsules.html" class="side-item__head">
+        <span class="side-item__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15.5 3.5a5 5 0 0 1 5 5v0a5 5 0 0 1-1.46 3.54l-6.5 6.5A5 5 0 1 1 5.46 11.46l6.5-6.5A5 5 0 0 1 15.5 3.5z"/>
+            <path d="M8.75 8.75l6.5 6.5"/>
+          </svg>
+        </span>
+        <span class="side-item__label">Твёрдые капсулы</span>
+        <svg class="side-item__chev side-item__chev--down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </a>
+      <ul class="side-item__sublist">
+        <li><a href="capsules-gs-about.html">О компании GS Capsule</a></li>
+        <li><a href="capsules-gelatin.html" class="is-active">Желатиновые капсулы</a></li>
+        <li><a href="capsules-cellulose.html">Целлюлозные капсулы</a></li>
+        <li><a href="capsules-pullulan.html">Пуллулановые капсулы</a></li>
+        <li><a href="capsules-design.html">Дизайн капсул GS Capsule</a></li>
+        <li><a href="capsules-colors.html">Цветовые решения</a></li>
+        <li><a href="capsules-print.html">Виды печати</a></li>
+        <li><a href="capsules-packing.html">Упаковка, транспортировка и хранение</a></li>
+      </ul>
+    </div>
+
+    <!-- Технологическое оборудование -->
+    <div class="side-item">
+      <a href="../equipment/equipment.html" class="side-item__head">
+        <span class="side-item__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>
+          </svg>
+        </span>
+        <span class="side-item__label">Технологическое<br>оборудование</span>
+        <svg class="side-item__chev side-item__chev--right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </a>
+      <ul class="side-item__sublist">
+        <li class="has-sub">
+          <div class="subrow">
+            <a href="#">Ручное капсулонаполняющее оборудование</a>
+            <button type="button" class="subtoggle" aria-expanded="false" aria-label="Показать подразделы"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+          </div>
+          <ul class="side-subsub">
+            <li><a href="#">Подраздел 1</a></li>
+            <li><a href="#">Подраздел 2</a></li>
+            <li><a href="#">Подраздел 3</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Полуавтоматическое капсулонаполняющее оборудование</a></li>
+        <li><a href="#">Автоматическое капсулонаполняющее оборудование</a></li>
+        <li><a href="#">Распылительные форсунки</a></li>
+        <li><a href="#">Счётно-фасовочное оборудование</a></li>
+        <li><a href="#">3D смесители для порошков</a></li>
+        <li><a href="#">Оборудование для укупорки</a></li>
+        <li><a href="#">Этикетировочное оборудование</a></li>
+        <li><a href="#">Складские позиции</a></li>
+      </ul>
+    </div>
+
+    <!-- Упаковочные материалы -->
+    <div class="side-item">
+      <a href="#" class="side-item__head">
+        <span class="side-item__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 3h6v3H9z"/>
+            <path d="M8 6h8l1 3v10a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V9l1-3z"/>
+            <line x1="9" y1="13" x2="15" y2="13"/>
+          </svg>
+        </span>
+        <span class="side-item__label">Упаковочные материалы</span>
+        <svg class="side-item__chev side-item__chev--right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </a>
+    </div>
+
+    <!-- Активные ингредиенты -->
+    <div class="side-item">
+      <a href="../index.html#ingredients" class="side-item__head">
+        <span class="side-item__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 4C10 4 4 10 4 20c8 0 14-4 16-16z"/>
+            <path d="M4 20c4-4 8-7 16-16"/>
+          </svg>
+        </span>
+        <span class="side-item__label">Активные ингредиенты</span>
+        <svg class="side-item__chev side-item__chev--right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Промо-плашка -->
+  <div class="side-promo">
+    <div class="side-promo__row">
+      <span class="side-promo__ico">i</span>
+      <span class="side-promo__txt">Индивидуальные решения<br>под ваши задачи</span>
+    </div>
+    <a href="#" class="side-promo__cta">
+      Получить консультацию
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+      </svg>
+    </a>
+  </div>
+</aside>
+
+<!-- ================= КОНТЕНТ ================= -->
+<main class="main">
+
+  <!-- Хлебные крошки -->
+  <nav class="crumbs" aria-label="Хлебные крошки">
+    <a href="../index.html">Главная</a>
+    <span class="sep">/</span>
+    <a href="../index.html#main">Продукция</a>
+    <span class="sep">/</span>
+    <span class="current">Желатиновые капсулы</span>
+  </nav>
+
+  <!-- HERO -->
+  <section class="gel-hero">
+    <div class="gel-hero__text">
+      <h1>Желатиновые <em>капсулы</em></h1>
+      <p class="gel-hero__sub">
+        Надёжное решение для фармацевтической<br>и нутрицевтической продукции
+      </p>
+      <p class="gel-hero__lead">
+        Твёрдые желатиновые капсулы производятся из желатина крупного рогатого скота и подходят для широкого спектра фармацевтических и нутрицевтических продуктов. Доступны размеры от 00 до 5.
+      </p>
+      <ul class="gel-features">
+        <li class="gel-feature">
+          <span class="gel-feature__ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5l8-3z"/>
+              <polyline points="9 12 11 14 15 10"/>
+            </svg>
+          </span>
+          <span class="gel-feature__txt">Соответствие международным стандартам</span>
+        </li>
+        <li class="gel-feature">
+          <span class="gel-feature__ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 12h4l3-8 4 16 3-8h4"/>
+            </svg>
+          </span>
+          <span class="gel-feature__txt">Стабильное качество партии к партии</span>
+        </li>
+        <li class="gel-feature">
+          <span class="gel-feature__ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7" rx="1"/>
+              <rect x="14" y="3" width="7" height="7" rx="1"/>
+              <rect x="3" y="14" width="7" height="7" rx="1"/>
+              <rect x="14" y="14" width="7" height="7" rx="1"/>
+            </svg>
+          </span>
+          <span class="gel-feature__txt">Широкий выбор размеров и цветов</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 4 КАРТОЧКИ ПОКАЗАТЕЛЕЙ -->
+  <section class="gel-stats" aria-label="Основные показатели">
+    <div class="gel-stat">
+      <span class="gel-stat__ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15.5 3.5a5 5 0 0 1 5 5v0a5 5 0 0 1-1.46 3.54l-6.5 6.5A5 5 0 1 1 5.46 11.46l6.5-6.5A5 5 0 0 1 15.5 3.5z"/>
+        </svg>
+      </span>
+      <div>
+        <div class="gel-stat__value">00–5</div>
+        <div class="gel-stat__label">Размерный ряд</div>
+        <div class="gel-stat__desc">Семь стандартных типоразмеров</div>
+      </div>
+    </div>
+    <div class="gel-stat">
+      <span class="gel-stat__ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/>
+          <polyline points="12 7 12 12 15 15"/>
+        </svg>
+      </span>
+      <div>
+        <div class="gel-stat__value">≤ 15 мин</div>
+        <div class="gel-stat__label">Распадаемость</div>
+        <div class="gel-stat__desc">Контрольный показатель готовой капсулы</div>
+      </div>
+    </div>
+    <div class="gel-stat">
+      <span class="gel-stat__ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2a10 10 0 0 1 0 20 10 10 0 0 1 0-20z"/>
+          <path d="M12 6v6l4 2"/>
+        </svg>
+      </span>
+      <div>
+        <div class="gel-stat__value">13–16%</div>
+        <div class="gel-stat__label">Потеря массы при высушивании</div>
+        <div class="gel-stat__desc">Нормируемый показатель качества</div>
+      </div>
+    </div>
+    <div class="gel-stat">
+      <span class="gel-stat__ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5l8-3z"/>
+        </svg>
+      </span>
+      <div>
+        <div class="gel-stat__value">5 лет</div>
+        <div class="gel-stat__label">Срок годности</div>
+        <div class="gel-stat__desc">При соблюдении условий хранения</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ТАБЛИЦА + БОКОВАЯ ПАНЕЛЬ (в единой белой карточке с заголовком) -->
+  <div class="gel-tech-grid">
+
+    <!-- Левая часть: заголовок + таблица в одной карточке -->
+    <div class="gel-tech-card">
+      <div class="gel-tech-head">
+        <div class="gel-tech-head__left">
+          <h2 class="gel-tech-head__title">Размеры и технические параметры</h2>
+          <div class="gel-tech-head__rule"></div>
+        </div>
+        <p class="gel-tech-head__desc">
+          Таблица позволяет быстро сравнить основные геометрические параметры и ориентировочный объём каждого типоразмера.
+        </p>
+      </div>
+
+      <div class="gel-table-wrap">
+        <table class="gel-table">
+          <thead>
+            <tr>
+              <th>Размер</th>
+              <th>Средний<br>вес<br>(мг)</th>
+              <th>Допуск<br>по весу</th>
+              <th>Длина<br>крышки<br>(мм)</th>
+              <th>Длина<br>тела (мм)</th>
+              <th>Длина<br>закрытой<br>капсулы (мм)</th>
+              <th>Толщина<br>крышки<br>(мм)</th>
+              <th>Толщина<br>тела<br>(мм)</th>
+              <th>Наружный<br>диаметр<br>крышки (мм)</th>
+              <th>Наружный<br>диаметр<br>тела (мм)</th>
+              <th>Объём<br>(мл)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>00</td>
+              <td>128</td>
+              <td>±7</td>
+              <td>11,8±0,4</td>
+              <td>20,3±0,4</td>
+              <td>23,4±0,5</td>
+              <td>0,115±0,015</td>
+              <td>0,110±0,015</td>
+              <td>8,50 — 8,60</td>
+              <td>8,15 — 8,25</td>
+              <td>0,93</td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>98</td>
+              <td>±6</td>
+              <td>11,0±0,4</td>
+              <td>18,5±0,4</td>
+              <td>21,7±0,5</td>
+              <td>0,110±0,015</td>
+              <td>0,105±0,015</td>
+              <td>7,61 — 7,71</td>
+              <td>7,30 — 7,40</td>
+              <td>0,68</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>75</td>
+              <td>±5</td>
+              <td>9,9±0,4</td>
+              <td>16,5±0,4</td>
+              <td>19,3±0,5</td>
+              <td>0,105±0,015</td>
+              <td>0,100±0,015</td>
+              <td>6,90 — 7,00</td>
+              <td>6,61 — 6,69</td>
+              <td>0,50</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>60</td>
+              <td>±4</td>
+              <td>9,0±0,4</td>
+              <td>15,3±0,4</td>
+              <td>17,8±0,5</td>
+              <td>0,100±0,015</td>
+              <td>0,095±0,015</td>
+              <td>6,32 — 6,40</td>
+              <td>6,05 — 6,13</td>
+              <td>0,37</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>48</td>
+              <td>±4</td>
+              <td>8,2±0,4</td>
+              <td>13,6±0,4</td>
+              <td>15,7±0,5</td>
+              <td>0,090±0,015</td>
+              <td>0,095±0,015</td>
+              <td>5,79 — 5,87</td>
+              <td>5,53 — 5,61</td>
+              <td>0,30</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>38</td>
+              <td>±3</td>
+              <td>7,2±0,4</td>
+              <td>12,3±0,4</td>
+              <td>14,2±0,5</td>
+              <td>0,095±0,015</td>
+              <td>0,095±0,015</td>
+              <td>5,28 — 5,38</td>
+              <td>5,00 — 5,08</td>
+              <td>0,21</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>28</td>
+              <td>±3</td>
+              <td>6,4±0,4</td>
+              <td>9,4±0,4</td>
+              <td>11,2±0,5</td>
+              <td>0,090±0,015</td>
+              <td>0,090±0,015</td>
+              <td>4,87 — 4,95</td>
+              <td>4,56 — 4,64</td>
+              <td>0,12</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="gel-footnote">
+        <span class="gel-footnote__ico">i</span>
+        <span>Значения в таблице приведены для справочного сравнения типоразмеров. <b>Фактические параметры партии</b> определяются технической документацией на конкретную продукцию.</span>
+      </div>
+    </div>
+
+    <!-- Боковая панель: дополнительные показатели -->
+    <div class="gel-side">
+      <div class="gel-side-card">
+        <div class="gel-side-card__title">Дополнительные показатели</div>
+        <div class="gel-side-card__row">
+          <span class="gel-side-card__key">Происхождение сырья</span>
+          <span class="gel-side-card__val">Желатин КРС</span>
+        </div>
+        <div class="gel-side-card__row">
+          <span class="gel-side-card__key">Распадаемость</span>
+          <span class="gel-side-card__val">Не более 15 мин.</span>
+        </div>
+        <div class="gel-side-card__row">
+          <span class="gel-side-card__key">Потеря массы при высушивании</span>
+          <span class="gel-side-card__val">13–16%</span>
+        </div>
+        <div class="gel-side-card__row">
+          <span class="gel-side-card__key">Halal</span>
+          <span class="gel-side-card__val">Да</span>
+        </div>
+        <div class="gel-side-card__row">
+          <span class="gel-side-card__key">Kosher</span>
+          <span class="gel-side-card__val">Да</span>
+        </div>
+        <div class="gel-side-card__row">
+          <span class="gel-side-card__key">Vegetarian</span>
+          <span class="gel-side-card__val">Нет</span>
+        </div>
+        <div class="gel-side-card__row">
+          <span class="gel-side-card__key">Срок годности</span>
+          <span class="gel-side-card__val">5 лет</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CTA-БАННЕР (полная ширина, заметный при прокрутке) -->
+  <div class="gel-cta-banner">
+    <span class="gel-cta-banner__ico">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="7"/>
+        <line x1="20" y1="20" x2="16.5" y2="16.5"/>
+      </svg>
+    </span>
+    <div class="gel-cta-banner__body">
+      <div class="gel-cta-banner__title">Подберём подходящий типоразмер</div>
+      <p class="gel-cta-banner__desc">Знаете состав и дозировку? Специалисты МЕДБИОПАК помогут определить оптимальный размер капсулы под ваши задачи.</p>
+    </div>
+    <a href="#" class="gel-cta-banner__btn">
+      Задать вопрос
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+      </svg>
+    </a>
+  </div>
+</main>
+
+<script>
+document.querySelectorAll('.subtoggle').forEach(function (b) {
+  b.addEventListener('click', function (e) {
+    e.preventDefault();
+    var li = b.closest('.has-sub');
+    b.setAttribute('aria-expanded', li.classList.toggle('is-open'));
+  });
+});
+</script>
+
+<!-- Заглушка для разделов в разработке -->
+<style>
+.wip-toast{position:fixed;left:50%;bottom:32px;transform:translate(-50%,20px);background:#1a1a1a;color:#fff;font:600 14px/1.4 'Manrope',system-ui,sans-serif;padding:13px 22px;border-radius:999px;box-shadow:0 10px 30px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:99999;white-space:nowrap}
+.wip-toast.is-on{opacity:1;transform:translate(-50%,0)}
+@media (max-width:520px){.wip-toast{white-space:normal;width:calc(100% - 32px);text-align:center;border-radius:18px}}
+</style>
+<script>
+(function(){
+  var t=document.createElement('div');t.className='wip-toast';t.textContent='Этот раздел находится в разработке';
+  document.body.appendChild(t);var timer;
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a[href="#"]');
+    if(!a)return;
+    e.preventDefault();e.stopImmediatePropagation();
+    t.classList.add('is-on');clearTimeout(timer);
+    timer=setTimeout(function(){t.classList.remove('is-on')},2200);
+  },true);
+})();
+</script>
+</body>
+</html>

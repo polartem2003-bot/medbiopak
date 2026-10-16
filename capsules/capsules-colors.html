@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Цветовые решения — МЕДБИОПАК</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=PT+Serif:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink:       #14161c;
+    --ink-soft:  #3d434e;
+    --muted:     rgba(20, 22, 28, 0.55);
+    --muted-2:   rgba(20, 22, 28, 0.42);
+    --line:      rgba(20, 22, 28, 0.10);
+    --line-soft: rgba(20, 22, 28, 0.06);
+    --red:       #E11D2A;
+    --red-soft:  rgba(225, 29, 42, 0.08);
+    --red-hov:   #c5171f;
+    --bg:        #F0F4F8;
+    --white:     #ffffff;
+
+    --header-h:    66px;
+    --header-top:  16px;
+    --header-side: 20px;
+
+    --side-w:      290px;
+    --side-gap:    18px;
+
+    --brand-w:     97px;
+  }
+
+  html, body {
+    background: var(--bg);
+    background-image: url('../images/bg-print.jpg');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-weight: 400;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+  body { overflow-x: hidden; position: relative; }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; background: none; border: none; cursor: pointer; }
+
+  /* ================= ЛОГОТИП ================= */
+  .brand-fixed {
+    position: fixed;
+    top: 28px;
+    left: calc(var(--side-gap) + (var(--side-w) - var(--brand-w)) / 2);   /* по центру над боковой панелью */
+    z-index: 60;
+    display: block;
+    width: var(--brand-w);
+  }
+  .brand-fixed img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.7));
+  }
+
+  /* ================= HEADER ================= */
+  .topbar {
+    position: fixed;
+    top: var(--header-top);
+    left: 50%;
+    transform: translateX(-50%);
+    right: auto;
+    height: var(--header-h);
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(22px) saturate(140%);
+    -webkit-backdrop-filter: blur(22px) saturate(140%);
+    border-radius: 999px;
+    border: 1px solid rgba(20, 22, 28, 0.12);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.6) inset,
+      0 10px 30px rgba(20, 22, 28, 0.10);
+    display: inline-flex;
+    align-items: center;
+    padding: 0 10px 0 32px;
+    gap: 18px;
+    white-space: nowrap;
+  }
+  .topbar__nav { flex: 0 0 auto; }
+  .topbar__nav ul {
+    list-style: none;
+    display: flex;
+    gap: 26px;
+    justify-content: center;
+  }
+  .topbar__nav a {
+    display: inline-block;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: rgba(20, 22, 28, 0.78);
+    letter-spacing: -0.005em;
+    padding: 6px 2px;
+    position: relative;
+    transition: color .2s;
+  }
+  .topbar__nav a::after {
+    content: "";
+    position: absolute;
+    left: 2px; right: 2px;
+    bottom: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .25s ease;
+  }
+  .topbar__nav a:hover,
+  .topbar__nav a.is-active { color: var(--ink); }
+  .topbar__nav a.is-active::after,
+  .topbar__nav a:hover::after { transform: scaleX(1); }
+
+  .topbar__right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .topbar__search {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink);
+    transition: background .2s, color .2s;
+  }
+  .topbar__search:hover { background: rgba(20, 22, 28, 0.06); }
+  .topbar__search svg { width: 18px; height: 18px; }
+
+  .topbar__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    height: 42px;
+    padding: 0 20px;
+    background: var(--red);
+    color: #fff;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1;
+    letter-spacing: -0.005em;
+    transition: background .2s, transform .2s, box-shadow .2s;
+  }
+  .topbar__cta:hover {
+    background: var(--red-hov);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(225, 29, 42, 0.28);
+  }
+  .topbar__cta svg { width: 15px; height: 15px; }
+
+  /* ================= SIDEBAR ================= */
+  .sidebar {
+    position: fixed;
+    top: 176px;
+    left: var(--side-gap);
+    bottom: var(--side-gap);
+    width: var(--side-w);
+    z-index: 40;
+    background: var(--white);
+    border-radius: 22px;
+    padding: 22px 18px 22px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.6) inset,
+      0 10px 36px rgba(20, 22, 28, 0.08);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(20, 22, 28, 0.15) transparent;
+  }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: rgba(20, 22, 28, 0.12); border-radius: 2px; }
+
+  .sidebar__title {
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink);
+    padding: 4px 10px 22px 22px;
+    border-bottom: 2px solid rgba(20, 22, 28, 0.12);
+    margin-bottom: 14px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .sidebar__title-ico {
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    background: var(--red-soft);
+    color: var(--red);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .sidebar__title-ico svg { width: 15px; height: 15px; }
+  .sidebar__title::after {
+    content: "";
+    position: absolute;
+    left: 22px;
+    bottom: -2px;
+    width: 40px;
+    height: 2px;
+    background: var(--red);
+  }
+
+  .side-nav { display: flex; flex-direction: column; }
+  .side-item { position: relative; }
+  .side-item + .side-item {
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .side-item__head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 12px;
+    border-radius: 10px;
+    color: var(--ink);
+    position: relative;
+    transition: background .2s, color .2s;
+  }
+  .side-item__head:hover { background: rgba(20, 22, 28, 0.025); }
+
+  .side-item__icon {
+    width: 26px;
+    height: 26px;
+    color: var(--ink-soft);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: color .2s;
+  }
+  .side-item__icon svg { width: 22px; height: 22px; }
+
+  .side-item__label {
+    flex: 1;
+    font-size: 14.5px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    line-height: 1.25;
+  }
+
+  .side-item__chev {
+    width: 14px; height: 14px;
+    color: var(--muted-2);
+    flex-shrink: 0;
+    transition: transform .25s, color .2s;
+  }
+  .side-item__chev--down { transform: rotate(0deg); }
+  .side-item__chev--right { transform: rotate(-90deg); }
+
+  .side-item.is-active > .side-item__head::before {
+    content: "";
+    position: absolute;
+    left: -4px;
+    top: 6px;
+    bottom: 6px;
+    width: 3px;
+    background: var(--red);
+    border-radius: 2px;
+  }
+  .side-item.is-active .side-item__icon { color: var(--red); }
+  .side-item.is-active .side-item__label { color: var(--red); font-weight: 700; }
+  .side-item.is-active .side-item__chev { color: var(--red); }
+
+  .side-item__sublist {
+    list-style: none;
+    padding: 4px 0 12px 46px;
+    display: none;
+  }
+  .side-item.is-active .side-item__sublist { display: block; }
+  .side-item__sublist a {
+    display: block;
+    padding: 7px 8px 7px 16px;
+    font-size: 13.5px;
+    line-height: 1.4;
+    font-weight: 500;
+    color: var(--muted);
+    position: relative;
+    border-radius: 6px;
+    transition: color .2s, background .2s;
+  }
+  .side-item__sublist a:hover {
+    color: var(--ink);
+    background: rgba(20, 22, 28, 0.025);
+  }
+  .side-item__sublist a.is-active {
+    color: var(--red);
+    font-weight: 700;
+    background: var(--red-soft);
+  }
+  .side-item__sublist a.is-active::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--red);
+  }
+
+  .side-promo {
+    margin-top: auto;
+    padding: 18px 4px 4px;
+    border-top: 1px solid var(--line-soft);
+  }
+  .side-promo__row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 0 8px;
+    margin-bottom: 14px;
+  }
+  .side-promo__ico {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 1.5px solid var(--muted-2);
+    color: var(--muted-2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+    font-family: 'PT Serif', Georgia, serif;
+    font-style: italic;
+  }
+  .side-promo__txt {
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  .side-promo__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 8px;
+    padding: 10px 12px;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--red);
+    letter-spacing: -0.005em;
+    border-radius: 8px;
+    transition: gap .2s, background .2s;
+  }
+  .side-promo__cta:hover { gap: 12px; background: rgba(225, 29, 42, 0.05); }
+  .side-promo__cta svg { width: 13px; height: 13px; }
+
+  /* ================= ОСНОВНОЙ КОНТЕНТ ================= */
+  .main {
+    margin-left: calc(var(--side-w) + var(--side-gap) * 2);
+    padding: calc(var(--header-h) + var(--header-top) + 16px) 34px 28px 20px;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* хлебные крошки */
+  .crumbs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+  .crumbs a {
+    color: var(--muted);
+    font-weight: 500;
+    transition: color .2s;
+  }
+  .crumbs a:hover { color: var(--red); }
+  .crumbs .sep { color: var(--muted-2); }
+  .crumbs .current {
+    color: var(--red);
+    font-weight: 700;
+  }
+
+  /* ====================================================
+     СТИЛИ РАЗДЕЛА «ЦВЕТОВЫЕ РЕШЕНИЯ» (префикс clr-)
+     ==================================================== */
+
+  /* --- HERO: текст слева, фото капсул вплотную справа --- */
+  .clr-hero {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(320px, 430px) minmax(0, 1fr);
+    align-items: start;
+    margin-bottom: 26px;
+  }
+
+  .clr-hero__text {
+    position: relative;
+    z-index: 2;
+    padding-top: 22px;
+  }
+
+  .clr-hero__label {
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 8px;
+  }
+  .clr-hero h1 {
+    font-size: clamp(34px, 3vw, 48px);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 20px;
+  }
+  .clr-hero h1 em {
+    font-family: 'PT Serif', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--red);
+  }
+  .clr-hero__sub {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    font-weight: 400;
+    max-width: 400px;
+    margin-bottom: 18px;
+  }
+  .clr-hero__lead {
+    max-width: 400px;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  /* Фото капсул: стоит сразу рядом с текстом, края растворяются в фоне */
+  .clr-hero__visual {
+    position: relative;
+    z-index: 1;
+    width: calc(100% + 20px);
+    max-width: 940px;
+    margin: 22px 0 0 10px;
+    aspect-ratio: 1630 / 965;
+    pointer-events: none;
+  }
+  .clr-hero__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    -webkit-mask-image:
+      linear-gradient(to right, transparent 0%, rgba(0,0,0,.35) 7%, black 18%, black 94%, transparent 100%),
+      linear-gradient(to bottom, transparent 0%, black 8%, black 90%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(to right, transparent 0%, rgba(0,0,0,.35) 7%, black 18%, black 94%, transparent 100%),
+      linear-gradient(to bottom, transparent 0%, black 8%, black 90%, transparent 100%);
+    mask-composite: intersect;
+  }
+
+  /* Бейдж 100+ */
+  .clr-badge {
+    position: absolute;
+    top: 4%;
+    right: 36px;
+    z-index: 3;
+    background: var(--red);
+    color: #fff;
+    border-radius: 14px;
+    padding: 14px 16px;
+    text-align: center;
+    box-shadow: 0 6px 22px rgba(225, 29, 42, 0.35);
+  }
+  .clr-badge__num {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .clr-badge__txt {
+    font-size: 10.5px;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-top: 3px;
+    opacity: 0.92;
+  }
+
+  /* --- ТРИ КАРТОЧКИ ПРЕИМУЩЕСТВ --- */
+  .clr-features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    list-style: none;
+    margin-bottom: 36px;
+  }
+  .clr-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: var(--white);
+    border-radius: 16px;
+    padding: 22px 18px;
+    border: 1px solid var(--line-soft);
+    box-shadow: 0 2px 10px rgba(20, 22, 28, 0.04);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .clr-feature:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(20, 22, 28, 0.08);
+  }
+  .clr-feature__ico {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--red-soft);
+    color: var(--red);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .clr-feature__ico svg { width: 20px; height: 20px; }
+  .clr-feature__body { flex: 1; min-width: 0; }
+  .clr-feature__title {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 5px;
+    line-height: 1.25;
+  }
+  .clr-feature__desc {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  /* --- ГАЛЕРЕЯ ЦВЕТОВ: сетка, все цвета видны сразу --- */
+  .clr-gallery { margin-bottom: 40px; }
+
+  .clr-gallery__title {
+    font-size: clamp(22px, 2vw, 28px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 8px;
+    padding-bottom: 14px;
+    border-bottom: 1.5px solid var(--line);
+  }
+
+  .clr-gallery__strip {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 14px;
+    padding: 18px 0 6px;
+  }
+
+  .clr-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 18px 10px 14px;
+    text-align: center;
+    border: 1px solid var(--line-soft);
+    box-shadow: 0 2px 8px rgba(20, 22, 28, 0.04);
+    transition: transform .25s, box-shadow .25s;
+    cursor: zoom-in;
+  }
+  .clr-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(20, 22, 28, 0.10);
+  }
+  .clr-card:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+  .clr-card img {
+    display: block;
+    width: auto;
+    height: 112px;
+    max-width: 100%;
+    margin: 0 auto 12px;
+    object-fit: contain;
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.10));
+    transition: transform .3s;
+  }
+  .clr-card:hover img { transform: scale(1.08); }
+  .clr-card__name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .clr-dot {
+    flex: none;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--c);
+    box-shadow: 0 0 0 1px rgba(20, 22, 28, 0.14), inset 0 1px 1px rgba(255,255,255,0.35);
+  }
+
+  /* Увеличенная капсула по клику */
+  .clr-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: none;
+    place-items: center;
+    padding: 24px;
+    background: rgba(11, 27, 69, 0.55);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+  .clr-lightbox.is-open { display: grid; }
+  .clr-lightbox__box {
+    position: relative;
+    min-width: min(86vw, 340px);
+    max-width: min(92vw, 520px);
+    padding: 32px 36px 26px;
+    text-align: center;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 30px 80px rgba(10, 30, 60, 0.35);
+  }
+  .clr-lightbox__img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: calc(88vh - 120px);
+    margin: 0 auto 16px;
+    filter: drop-shadow(0 8px 14px rgba(0,0,0,0.14));
+  }
+  .clr-lightbox__name {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .clr-lightbox__name .clr-dot { width: 14px; height: 14px; }
+  .clr-lightbox__close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #fff;
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-size: 22px;
+    line-height: 1;
+    transition: background .2s, color .2s;
+  }
+  .clr-lightbox__close:hover { background: var(--red); border-color: var(--red); color: #fff; }
+
+  /* --- НИЖНИЙ БЛОК: PANTONE --- */
+  .clr-cta {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 28px;
+    align-items: stretch;
+    background: var(--white);
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--line-soft);
+    box-shadow: 0 4px 20px rgba(20, 22, 28, 0.05);
+    margin-bottom: 32px;
+  }
+  .clr-cta__img { overflow: hidden; }
+  .clr-cta__img img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    border-radius: 12px;
+  }
+  .clr-cta__body {
+    padding: 20px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .clr-cta__label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 10px;
+  }
+  .clr-cta__title {
+    font-size: clamp(20px, 1.8vw, 26px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .clr-cta__desc {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--muted);
+    max-width: 380px;
+  }
+
+  /* ================= АДАПТИВ ================= */
+  @media (max-width: 1280px) {
+    :root { --side-w: 260px; }
+    .main { padding-left: 24px; padding-right: 28px; }
+    .clr-hero { grid-template-columns: minmax(290px, 380px) minmax(0, 1fr); }
+    .clr-hero__sub, .clr-hero__lead { max-width: 360px; }
+    .clr-hero__visual { width: calc(100% + 10px); margin: 22px 0 0 6px; }
+  }
+  @media (max-width: 1080px) {
+    .topbar__nav ul { gap: 22px; }
+    .clr-features { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .clr-gallery__strip { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+  @media (max-width: 860px) {
+    :root { --side-w: 0px; --header-h: 60px; --header-top: 12px; --header-side: 12px; }
+    .brand-fixed { width: 66px; left: 16px; top: 14px; }
+    .topbar { left: 92px; transform: none; padding: 0 8px 0 16px; gap: 10px; }
+    .topbar__nav { display: none; }
+    .topbar__cta { padding: 0 14px; height: 40px; font-size: 12.5px; }
+    .topbar__search { width: 38px; height: 38px; }
+    .sidebar {
+      position: relative;
+      top: 0; left: 0; right: 0; bottom: auto;
+      width: auto;
+      border-radius: 20px;
+      margin: calc(var(--header-h) + var(--header-top) + 20px) 12px 20px;
+      padding: 20px 14px;
+      max-height: none;
+      overflow: visible;
+    }
+    .main {
+      margin-left: 0;
+      padding: 0 20px 40px;
+    }
+    .clr-hero { grid-template-columns: 1fr; padding-bottom: 8px; }
+    .clr-hero__text { padding-top: 0; }
+    .clr-hero__visual { width: 100%; max-width: none; margin: 8px 0 0; }
+    .clr-badge { top: 10px; right: 10px; padding: 10px 12px; }
+    .clr-badge__num { font-size: 22px; }
+    .clr-features { grid-template-columns: 1fr 1fr; }
+    .clr-cta { grid-template-columns: 1fr; }
+    .clr-cta__img img { min-height: 180px; }
+    .clr-cta__body { padding: 22px 20px; }
+  }
+  @media (max-width: 520px) {
+    .main { padding: 0 16px 28px; }
+    .clr-hero h1 { font-size: 32px; }
+    .clr-features { grid-template-columns: 1fr; }
+    .clr-gallery__strip { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .clr-card img { height: 96px; }
+    .clr-cta__body { padding: 22px 16px; }
+  }
+
+  /* ---- вложенные подпункты меню (стрелка справа) ---- */
+  .side-item__sublist .has-sub > .subrow { display: flex; align-items: center; gap: 2px; }
+  .side-item__sublist .has-sub > .subrow > a { flex: 1; min-width: 0; }
+  .subtoggle {
+    flex: none; width: 28px; height: 28px; border-radius: 8px;
+    display: grid; place-items: center;
+    color: var(--muted-2); transition: background .2s, color .2s;
+  }
+  .subtoggle:hover { background: rgba(20, 22, 28, 0.05); color: var(--red); }
+  .subtoggle svg { width: 14px; height: 14px; transition: transform .25s; }
+  .has-sub.is-open > .subrow .subtoggle { color: var(--red); }
+  .has-sub.is-open > .subrow .subtoggle svg { transform: rotate(180deg); }
+  .side-subsub {
+    list-style: none; display: none;
+    margin: 0 0 6px 16px; padding: 2px 0 4px 10px;
+    border-left: 1px solid var(--line);
+  }
+  .has-sub.is-open > .side-subsub { display: block; }
+  .side-item__sublist .side-subsub a { padding: 6px 8px; font-size: 13px; }
+  /* подпункты начинаются от левого края, на уровне иконок */
+  .side-item__sublist { padding: 4px 0 12px 0; }
+  .side-item__sublist > li > a,
+  .side-item__sublist .subrow > a { padding-left: 12px; }
+  .side-item__sublist .side-subsub { margin-left: 12px; }
+</style>
+</head>
+<body>
+
+<!-- ================= ЛОГОТИП ================= -->
+<a href="../index.html" class="brand-fixed" aria-label="МЕДБИОПАК — на главную">
+  <img src="../images/logo-medbiopak.png" alt="МЕДБИОПАК">
+</a>
+
+<!-- ================= HEADER ================= -->
+<header class="topbar">
+  <nav class="topbar__nav">
+    <ul>
+      <li><a href="../index.html#main">О нас</a></li>
+      <li><a href="../index.html#main" class="is-active">Продукция</a></li>
+      <li><a href="../index.html#library">Библиотека</a></li>
+      <li><a href="#">Контакты</a></li>
+    </ul>
+  </nav>
+  <div class="topbar__right">
+    <button class="topbar__search" aria-label="Поиск">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="7"/>
+        <line x1="20" y1="20" x2="16.5" y2="16.5"/>
+      </svg>
+    </button>
+    <a href="#" class="topbar__cta">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+      Задать вопрос
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+    </a>
+  </div>
+</header>
+
+<!-- ================= SIDEBAR ================= -->
+<aside class="sidebar" aria-label="Разделы продукции">
+  <div class="sidebar__title">
+    <span class="sidebar__title-ico">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7" rx="1"/>
+        <rect x="14" y="3" width="7" height="7" rx="1"/>
+        <rect x="3" y="14" width="7" height="7" rx="1"/>
+        <rect x="14" y="14" width="7" height="7" rx="1"/>
+      </svg>
+    </span>
+    <span>Продукция</span>
+  </div>
+
+  <nav class="side-nav">
+    <!-- Твёрдые капсулы — АКТИВНЫЙ раздел -->
+    <div class="side-item is-active">
+      <a href="capsules.html" class="side-item__head">
+        <span class="side-item__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15.5 3.5a5 5 0 0 1 5 5v0a5 5 0 0 1-1.46 3.54l-6.5 6.5A5 5 0 1 1 5.46 11.46l6.5-6.5A5 5 0 0 1 15.5 3.5z"/>
+            <path d="M8.75 8.75l6.5 6.5"/>
+          </svg>
+        </span>
+        <span class="side-item__label">Твёрдые капсулы</span>
+        <svg class="side-item__chev side-item__chev--down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </a>
+      <ul class="side-item__sublist">
+        <li><a href="capsules-gs-about.html">О компании GS Capsule</a></li>
+        <li><a href="capsules-gelatin.html">Желатиновые капсулы</a></li>
+        <li><a href="capsules-cellulose.html">Целлюлозные капсулы</a></li>
+        <li><a href="capsules-pullulan.html">Пуллулановые капсулы</a></li>
+        <li><a href="capsules-design.html">Дизайн капсул GS Capsule</a></li>
+        <li><a href="capsules-colors.html" class="is-active">Цветовые решения</a></li>
+        <li><a href="capsules-print.html">Виды печати</a></li>
+        <li><a href="capsules-packing.html">Упаковка, транспортировка и хранение</a></li>
+      </ul>
+    </div>
+
+    <!-- Технологическое оборудование -->
+    <div class="side-item">
+      <a href="../equipment/equipment.html" class="side-item__head">
+        <span class="side-item__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>
+          </svg>
+        </span>
+        <span class="side-item__label">Технологическое<br>оборудование</span>
+        <svg class="side-item__chev side-item__chev--right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </a>
+      <ul class="side-item__sublist">
+        <li class="has-sub">
+          <div class="subrow">
+            <a href="#">Ручное капсулонаполняющее оборудование</a>
+            <button type="button" class="subtoggle" aria-expanded="false" aria-label="Показать подразделы"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+          </div>
+          <ul class="side-subsub">
+            <li><a href="#">Подраздел 1</a></li>
+            <li><a href="#">Подраздел 2</a></li>
+            <li><a href="#">Подраздел 3</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Полуавтоматическое капсулонаполняющее оборудование</a></li>
+        <li><a href="#">Автоматическое капсулонаполняющее оборудование</a></li>
+        <li><a href="#">Распылительные форсунки</a></li>
+        <li><a href="#">Счётно-фасовочное оборудование</a></li>
+        <li><a href="#">3D смесители для порошков</a></li>
+        <li><a href="#">Оборудование для укупорки</a></li>
+        <li><a href="#">Этикетировочное оборудование</a></li>
+        <li><a href="#">Складские позиции</a></li>
+      </ul>
+    </div>
+
+    <!-- Упаковочные материалы -->
+    <div class="side-item">
+      <a href="#" class="side-item__head">
+        <span class="side-item__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 3h6v3H9z"/>
+            <path d="M8 6h8l1 3v10a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V9l1-3z"/>
+            <line x1="9" y1="13" x2="15" y2="13"/>
+          </svg>
+        </span>
+        <span class="side-item__label">Упаковочные материалы</span>
+        <svg class="side-item__chev side-item__chev--right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </a>
+    </div>
+
+    <!-- Активные ингредиенты -->
+    <div class="side-item">
+      <a href="../index.html#ingredients" class="side-item__head">
+        <span class="side-item__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 4C10 4 4 10 4 20c8 0 14-4 16-16z"/>
+            <path d="M4 20c4-4 8-7 16-16"/>
+          </svg>
+        </span>
+        <span class="side-item__label">Активные ингредиенты</span>
+        <svg class="side-item__chev side-item__chev--right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Промо-плашка -->
+  <div class="side-promo">
+    <div class="side-promo__row">
+      <span class="side-promo__ico">i</span>
+      <span class="side-promo__txt">Индивидуальные решения<br>под ваши задачи</span>
+    </div>
+    <a href="#" class="side-promo__cta">
+      Получить консультацию
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+      </svg>
+    </a>
+  </div>
+</aside>
+
+<!-- ================= КОНТЕНТ ================= -->
+<main class="main">
+
+  <!-- Хлебные крошки -->
+  <nav class="crumbs" aria-label="Хлебные крошки">
+    <a href="../index.html">Главная</a>
+    <span class="sep">/</span>
+    <span class="current">Цветовые решения</span>
+  </nav>
+
+  <!-- HERO -->
+  <section class="clr-hero">
+    <div class="clr-hero__text">
+      <div class="clr-hero__label">Цветовые решения</div>
+      <h1>Цветовые <em>решения</em></h1>
+      <p class="clr-hero__sub">
+        Цвет капсул является важным параметром внешнего вида
+        и влияет не только на привлекательность инкапсулированного
+        препарата, но и способствует его идентификации, а также может
+        защищать субстанцию от нежелательного воздействия
+        солнечного света.
+      </p>
+      <p class="clr-hero__lead">
+        GS Capsule имеет обширный опыт и высокий уровень компетентности
+        в разработке цветовых решений, удовлетворяющих самым
+        требовательным заказчикам.
+      </p>
+    </div>
+    <div class="clr-hero__visual">
+      <div class="clr-badge">
+        <div class="clr-badge__num">100+</div>
+        <div class="clr-badge__txt">вариантов цветов<br>и комбинаций!</div>
+      </div>
+      <img class="clr-hero__img" src="../images/hero-colors-hd.jpg" width="1630" height="965" alt="Цветные капсулы — палитра цветовых решений">
+    </div>
+  </section>
+
+  <!-- КАРТОЧКИ ПРЕИМУЩЕСТВ -->
+  <ul class="clr-features">
+    <li class="clr-feature">
+      <span class="clr-feature__ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5l8-3z"/>
+          <polyline points="9 12 11 14 15 10"/>
+        </svg>
+      </span>
+      <div class="clr-feature__body">
+        <div class="clr-feature__title">Разрешённые красители</div>
+        <div class="clr-feature__desc">GS Capsule использует только разрешённые на территории заказчика красители.</div>
+      </div>
+    </li>
+    <li class="clr-feature">
+      <span class="clr-feature__ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 4C10 4 4 10 4 20c8 0 14-4 16-16z"/>
+          <path d="M4 20c4-4 8-7 16-16"/>
+        </svg>
+      </span>
+      <div class="clr-feature__body">
+        <div class="clr-feature__title">Натуральные компоненты</div>
+        <div class="clr-feature__desc">Также применяются натуральные минеральные красители.</div>
+      </div>
+    </li>
+    <li class="clr-feature">
+      <span class="clr-feature__ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7" rx="1"/>
+          <rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/>
+          <rect x="14" y="14" width="7" height="7" rx="1"/>
+        </svg>
+      </span>
+      <div class="clr-feature__body">
+        <div class="clr-feature__title">Индивидуальные решения</div>
+        <div class="clr-feature__desc">Практически неограниченная палитра цветов для любых задач.</div>
+      </div>
+    </li>
+  </ul>
+
+  <!-- ГАЛЕРЕЯ ЦВЕТОВ -->
+  <section class="clr-gallery">
+    <h2 class="clr-gallery__title">Примеры цветовых решений</h2>
+    <div class="clr-gallery__strip">
+      <div class="clr-card" tabindex="0" role="button" title="Нажмите, чтобы увеличить" data-color="#DDDBDA"><img src="../images/capsule-white.webp" alt="Белый"><div class="clr-card__name"><i class="clr-dot" style="--c:#DDDBDA"></i>Белый</div></div>
+      <div class="clr-card" tabindex="0" role="button" title="Нажмите, чтобы увеличить" data-color="#C0B606"><img src="../images/capsule-yellow.webp" alt="Жёлтый"><div class="clr-card__name"><i class="clr-dot" style="--c:#C0B606"></i>Жёлтый</div></div>
+      <div class="clr-card" tabindex="0" role="button" title="Нажмите, чтобы увеличить" data-color="#A17A3B"><img src="../images/capsule-gold.webp" alt="Золотой"><div class="clr-card__name"><i class="clr-dot" style="--c:#A17A3B"></i>Золотой</div></div>
+      <div class="clr-card" tabindex="0" role="button" title="Нажмите, чтобы увеличить" data-color="#DD7F2F"><img src="../images/capsule-orange.webp" alt="Оранжевый"><div class="clr-card__name"><i class="clr-dot" style="--c:#DD7F2F"></i>Оранжевый</div></div>
+      <div class="clr-card" tabindex="0" role="button" title="Нажмите, чтобы увеличить" data-color="#C8A499"><img src="../images/capsule-blush.webp" alt="Розовый"><div class="clr-card__name"><i class="clr-dot" style="--c:#C8A499"></i>Розовый</div></div>
+      <div class="clr-card" tabindex="0" role="button" title="Нажмите, чтобы увеличить" data-color="#C8596D"><img src="../images/capsule-pink.webp" alt="Малиновый"><div class="clr-card__name"><i class="clr-dot" style="--c:#C8596D"></i>Малиновый</div></div>
+      <div class="clr-card" tabindex="0" role="button" title="Нажмите, чтобы увеличить" data-color="#852E23"><img src="../images/capsule-red.webp" alt="Красный"><div class="clr-card__name"><i class="clr-dot" style="--c:#852E23"></i>Красный</div></div>
+      <div class="clr-card" tabindex="0" role="button" title="Нажмите, чтобы увеличить" data-color="#76417B"><img src="../images/capsule-purple.webp" alt="Фиолетовый"><div class="clr-card__name"><i class="clr-dot" style="--c:#76417B"></i>Фиолетовый</div></div>
+      <div class="clr-card" tabindex="0" role="button" title="Нажмите, чтобы увеличить" data-color="#9D614F"><img src="../images/capsule-brown.webp" alt="Коричневый"><div class="clr-card__name"><i class="clr-dot" style="--c:#9D614F"></i>Коричневый</div></div>
+      <div class="clr-card" tabindex="0" role="button" title="Нажмите, чтобы увеличить" data-color="#2F6B28"><img src="../images/capsule-green.webp" alt="Зелёный"><div class="clr-card__name"><i class="clr-dot" style="--c:#2F6B28"></i>Зелёный</div></div>
+      <div class="clr-card" tabindex="0" role="button" title="Нажмите, чтобы увеличить" data-color="#618773"><img src="../images/capsule-sage.webp" alt="Тёмно-зелёный"><div class="clr-card__name"><i class="clr-dot" style="--c:#618773"></i>Тёмно-зелёный</div></div>
+      <div class="clr-card" tabindex="0" role="button" title="Нажмите, чтобы увеличить" data-color="#9A9A96"><img src="../images/capsule-grey.webp" alt="Серый"><div class="clr-card__name"><i class="clr-dot" style="--c:#9A9A96"></i>Серый</div></div>
+    </div>
+  </section>
+
+  <!-- ИНДИВИДУАЛЬНЫЙ ПОДХОД (Pantone) — без кнопки -->
+  <section class="clr-cta">
+    <div class="clr-cta__img">
+      <img src="../images/pantone-fan.png" alt="Палитра Pantone — индивидуальный подбор цвета">
+    </div>
+    <div class="clr-cta__body">
+      <h2 class="clr-cta__title">Индивидуальный подход<br>к каждому клиенту</h2>
+      <p class="clr-cta__desc">
+        Мы помогаем подобрать оптимальное цветовое решение,
+        учитывая особенности препарата, требования рынка
+        и брендинга заказчика.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<!-- Увеличенная капсула -->
+<div class="clr-lightbox" id="clrLightbox" role="dialog" aria-modal="true" aria-label="Просмотр цвета">
+  <div class="clr-lightbox__box">
+    <button class="clr-lightbox__close" type="button" aria-label="Закрыть">&times;</button>
+    <img class="clr-lightbox__img" src="" alt="">
+    <div class="clr-lightbox__name"><i class="clr-dot" style="--c:#ccc"></i><span></span></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var lb = document.getElementById('clrLightbox');
+  if (!lb) return;
+  var big = lb.querySelector('.clr-lightbox__img');
+  var dot = lb.querySelector('.clr-dot');
+  var label = lb.querySelector('.clr-lightbox__name span');
+  var closeBtn = lb.querySelector('.clr-lightbox__close');
+  var last = null;
+
+  function open(card) {
+    var img = card.querySelector('img');
+    last = card;
+    big.src = img.currentSrc || img.src;
+    big.alt = img.alt;
+    label.textContent = img.alt;
+    dot.style.setProperty('--c', card.getAttribute('data-color') || '#ccc');
+    lb.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+  function close() {
+    lb.classList.remove('is-open');
+    document.body.style.overflow = '';
+    if (last) last.focus();
+  }
+
+  document.querySelectorAll('.clr-card').forEach(function (card) {
+    card.addEventListener('click', function () { open(card); });
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(card); }
+    });
+  });
+  lb.addEventListener('click', function (e) {
+    if (e.target === lb || e.target.closest('.clr-lightbox__close')) close();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && lb.classList.contains('is-open')) close();
+  });
+})();
+</script>
+
+<script>
+document.querySelectorAll('.subtoggle').forEach(function (b) {
+  b.addEventListener('click', function (e) {
+    e.preventDefault();
+    var li = b.closest('.has-sub');
+    b.setAttribute('aria-expanded', li.classList.toggle('is-open'));
+  });
+});
+</script>
+
+<!-- Заглушка для разделов в разработке -->
+<style>
+.wip-toast{position:fixed;left:50%;bottom:32px;transform:translate(-50%,20px);background:#1a1a1a;color:#fff;font:600 14px/1.4 'Manrope',system-ui,sans-serif;padding:13px 22px;border-radius:999px;box-shadow:0 10px 30px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:99999;white-space:nowrap}
+.wip-toast.is-on{opacity:1;transform:translate(-50%,0)}
+@media (max-width:520px){.wip-toast{white-space:normal;width:calc(100% - 32px);text-align:center;border-radius:18px}}
+</style>
+<script>
+(function(){
+  var t=document.createElement('div');t.className='wip-toast';t.textContent='Этот раздел находится в разработке';
+  document.body.appendChild(t);var timer;
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a[href="#"]');
+    if(!a)return;
+    e.preventDefault();e.stopImmediatePropagation();
+    t.classList.add('is-on');clearTimeout(timer);
+    timer=setTimeout(function(){t.classList.remove('is-on')},2200);
+  },true);
+})();
+</script>
+</body>
+</html>
