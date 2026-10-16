@@ -68,25 +68,18 @@
     z-index: 0;
     pointer-events: none;
   }
-  .hero-bg::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg,
-      var(--bg) 0%,
-      rgba(238, 240, 244, 0.92) 8%,
-      rgba(238, 240, 244, 0.40) 24%,
-      rgba(238, 240, 244, 0.00) 42%);
-  }
-  .hero-bg::after {
-    content: "";
-    position: absolute;
-    left: 0; right: 0; bottom: 0;
-    height: 38%;
-    background: linear-gradient(to bottom,
-      rgba(238, 240, 244, 0) 0%,
-      rgba(238, 240, 244, 0.75) 60%,
-      var(--bg) 100%);
+
+  /* фото растворяется в общем фоне страницы: маска вместо плашек цвета,
+     поэтому по краям нет ни швов, ни резких границ */
+  .hero-bg {
+    -webkit-mask-image:
+      linear-gradient(to right, transparent 0%, rgba(0,0,0,.18) 9%, rgba(0,0,0,.55) 20%, rgba(0,0,0,.88) 32%, #000 44%),
+      linear-gradient(to bottom, #000 0%, #000 52%, rgba(0,0,0,.78) 66%, rgba(0,0,0,.42) 80%, rgba(0,0,0,.14) 92%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(to right, transparent 0%, rgba(0,0,0,.18) 9%, rgba(0,0,0,.55) 20%, rgba(0,0,0,.88) 32%, #000 44%),
+      linear-gradient(to bottom, #000 0%, #000 52%, rgba(0,0,0,.78) 66%, rgba(0,0,0,.42) 80%, rgba(0,0,0,.14) 92%, transparent 100%);
+    mask-composite: intersect;
   }
 
   /* ================= ЛОГОТИП ================= */

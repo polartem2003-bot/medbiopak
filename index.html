@@ -2073,7 +2073,7 @@
       e.preventDefault();
       if (document.body.classList.contains('has-subpage')) location.hash = 'main';
       const idx = parseInt(el.dataset.goto, 10);
-      if (pages[idx]) pages[idx].scrollIntoView({ behavior: 'smooth' });
+      if (pages[idx]) pages[idx].scrollIntoView({ behavior: 'instant' });   // сразу на нужную страницу, без прокрутки через все разделы
     });
   });
 
